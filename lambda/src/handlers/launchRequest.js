@@ -1,12 +1,12 @@
 
 var handlers = {
     'LaunchRequest': function () {
-        this.response.speak(this.t("WELCOME_MSG"));
-        this.emit(':responseReady');
-        this.emit('NewTripIntent');
+        this.emit("NewTripIntent");
     },
     "NewTripIntent": function () {
-        this.response.speak(this.t("ASK_NEW_TRIP"));
+        let prompt = this.t("ASK_NEW_TRIP");
+        let reprompt = this.t("LAUNCH_REPROMPT")
+        this.response.speak(this.t("WELCOME_MSG") + ' ' + prompt).listen(reprompt);
         this.emit(':responseReady');
     }
 };
