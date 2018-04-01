@@ -3,7 +3,11 @@
 let en = {
     "WELCOME_MSG": "Hi I am pack buddy",
     "ASK_NEW_TRIP": "Do you want me to help you with packing",
-    "LAUNCH_REPROMPT": "Please say something",
+    "REPROMPT": "Please say something",
+
+//NewTripHandler
+    "ASK_ABOUT_TRIP":"Tell me about your trip",
+
     "Goodbye_MSG": "Good Bye"
 };
 

@@ -16,28 +16,34 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
+          "name": "NewTripIntent",
           "samples": [
-            "hello",
-            "say hello",
-            "say hello world"
-          ]
-        },
-        {
-          "name": "MyNameIsIntent",
-          "slots": [
-            {
-              "name": "name",
-              "type": "AMAZON.US_FIRST_NAME"
-            }
-          ],
-          "samples": [
-            "my name is {name}",
-            "i am {name}",
-            "you can call me {name}"
+            "new trip"
           ]
         }
       ]
-    }
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "NewTripIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.515040796006"
+          }
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Confirm.Intent.515040796006",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "are you sure you want new trip"
+          }
+        ]
+      }
+    ]
   }
 }

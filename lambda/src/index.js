@@ -3,8 +3,8 @@ var Alexa = require("alexa-sdk");
 var languageStrings = require('./strings');
 
 //handlers import
-var launchIntents = require("./handlers/launchRequest");
-var sayHelloIntent = require("./handlers/sayHelloIntent");
+var launchRequestHandler = require("./handlers/launchRequestHandler");
+var newTripHandler = require("./handlers/newTripHandler")
 
 //handler function
 exports.handler = function (event, context) {
@@ -12,7 +12,7 @@ exports.handler = function (event, context) {
     alexa.resources = languageStrings;
     alexa.appId = "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413";
     alexa.dynamoDBTableName = 'packBuddyTable'; // Dafuq really? That's it?
-    alexa.registerHandlers(handlers, launchIntents, sayHelloIntent);
+    alexa.registerHandlers(handlers, launchRequestHandler, newTripHandler);
     alexa.execute();
 };
 
