@@ -1,0 +1,27 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "google"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "space-before-function-paren": [
+            "error",
+            "always"
+        ],
+        "object-curly-spacing": "off"
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    }
+}
