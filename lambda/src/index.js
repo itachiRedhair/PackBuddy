@@ -3,7 +3,8 @@ var Alexa = require("alexa-sdk");
 var languageStrings = require('./strings');
 var constants = require("./constants")
 //handlers import
-var stateHandlers = require("./handlers/stateHandlers");
+var newSessionHandler = require("./handlers/newSessionHandler");
+var newTripModeHandler = require("./handlers/newTripModeHandler");
 
 //handler function
 exports.handler = function (event, context) {
@@ -12,9 +13,8 @@ exports.handler = function (event, context) {
     alexa.appId = constants.appId;
     alexa.dynamoDBTableName = constants.dynamoDBTableName; // Dafuq really? That's it?
     alexa.registerHandlers(
-        handler,
-        stateHandlers.startModeIntentHandlers,
-        stateHandlers.newTripModeIntentHandlers
+        newSessionHandler,
+        newTripModeHandler
     );
     alexa.execute();
 };
