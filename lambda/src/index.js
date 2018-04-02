@@ -1,23 +1,35 @@
 'use strict';
 var Alexa = require("alexa-sdk");
 var languageStrings = require('./strings');
-
+var constants = require("./constants")
 //handlers import
-var launchRequestHandler = require("./handlers/launchRequestHandler");
-var newTripHandler = require("./handlers/newTripHandler")
+var stateHandlers = require("./handlers/stateHandlers");
 
 //handler function
 exports.handler = function (event, context) {
     var alexa = Alexa.handler(event, context);
     alexa.resources = languageStrings;
-    alexa.appId = "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413";
-    alexa.dynamoDBTableName = 'packBuddyTable'; // Dafuq really? That's it?
-    alexa.registerHandlers(handlers, launchRequestHandler, newTripHandler);
+    alexa.appId = constants.appId;
+    alexa.dynamoDBTableName = constants.dynamoDBTableName; // Dafuq really? That's it?
+    alexa.registerHandlers(
+        handler,
+        stateHandlers.startModeIntentHandlers,
+        stateHandlers.newTripModeIntentHandlers
+    );
     alexa.execute();
 };
 
-var handlers = {
+
+
+var handler = {
+    'LaunchRequest': function () {
+        console.log('in Launch Request in index.js');
+        this.handler.state = constants.states.LAUNCH;
+        this.emitWithState("LaunchRequest");
+    },
     'SessionEndedRequest': function () {
+        // this.handler.state = states.LAUNCH;
+        this.emit(':saveState', true);
         console.log('Session ended with reason: ' + this.event.request.reason);
     },
     'AMAZON.StopIntent': function () {

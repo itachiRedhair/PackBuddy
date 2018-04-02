@@ -14,7 +14,7 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "lambda\\src"
+          "sourceDir": "lambda/src"
         },
         "interfaces": []
       }
