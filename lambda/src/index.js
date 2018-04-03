@@ -5,6 +5,7 @@ var constants = require("./constants")
 //handlers import
 var newSessionHandler = require("./handlers/newSessionHandler");
 var newTripModeHandler = require("./handlers/newTripModeHandler");
+var packBagHandler = require("./handlers/packBagHandler");
 
 //handler function
 exports.handler = function (event, context) {
@@ -14,7 +15,8 @@ exports.handler = function (event, context) {
     alexa.dynamoDBTableName = constants.dynamoDBTableName; // Dafuq really? That's it?
     alexa.registerHandlers(
         newSessionHandler,
-        newTripModeHandler
+        newTripModeHandler,
+        packBagHandler
     );
     alexa.execute();
 };

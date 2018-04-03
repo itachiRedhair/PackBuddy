@@ -9,6 +9,7 @@ module.exports = Object.freeze({
     states: {
         LAUNCH: "_LAUNCH",
         NEW_TRIP: "_NEW_TRIP",
+        PACKING: "_PACKING",
         EXISTING_TRIP: "_EXISTING_TRIP"
     }
 });
