@@ -12,7 +12,7 @@ exports.handler = function (event, context) {
     var alexa = Alexa.handler(event, context);
     alexa.resources = languageStrings;
     alexa.appId = constants.appId;
-    alexa.dynamoDBTableName = constants.dynamoDBTableName; // Dafuq really? That's it?
+    alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
     alexa.registerHandlers(
         newSessionHandler,
         newTripModeHandler,

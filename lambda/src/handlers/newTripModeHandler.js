@@ -1,5 +1,6 @@
 var Alexa = require("alexa-sdk");
-const constants = require("./../constants")
+const constants = require("./../constants");
+var ddb = require("./../utilities/ddbController");
 
 const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
@@ -24,7 +25,16 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
         // this.emit(":responseReady");
 
         this.handler.state = constants.states.PACKING;
-        this.emitWithState("NewSession");
+
+        var userId = this.event.session.user.userId;
+
+        ddb.insertOrUpdateDDB(userId).then(data => {
+            console.log('data of dynamodb', data);
+            this.emitWithState("NewSession");
+        }).catch(error => {
+            console.log('error of dynamodb', error);
+        });
+
 
     },
 

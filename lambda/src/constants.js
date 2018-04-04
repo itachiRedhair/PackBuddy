@@ -4,7 +4,9 @@ module.exports = Object.freeze({
 
     appId: "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413",
 
-    dynamoDBTableName: 'packBuddyTable',
+    //dynamodb tables
+    sessionTable: 'sessionTable',
+    tripDataTable: 'tripDataTable',
 
     states: {
         LAUNCH: "_LAUNCH",

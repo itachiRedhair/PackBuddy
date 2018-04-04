@@ -1,5 +1,7 @@
+
 var Alexa = require("alexa-sdk");
 const constants = require("./../constants");
+var ddb = require('./../utilities/ddbController')
 
 var packingList = [
     'books',
@@ -11,47 +13,17 @@ var packingList = [
 const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
 
     'NewSession': function () {
-        const message = "Let's start packing. Should we?";
+        const message = "Let's start packing. Shall we?";
         this.response.speak(message).listen("Do you want to start packing right now?");
         this.emit(":responseReady");
     },
 
     'packBagIntent': function () {
-
-        // this.attributes['trips_list']=null;
-
-        this.attributes['trips_list']['chi_la'] =
-            {
-                "trip_name": "chi_la",
-                "info": {
-                    "from": "chi",
-                    "to": "las",
-                    "date": "3march",
-                }
-            }
-
-        this.attributes['trips_list']['la_chi'] =
-            {
-                "trip_name": "la_CHI",
-                "info": {
-                    "from": "la",
-                    "to": "chi",
-                    "date": "3march",
-                }
-            }
-
-
         var reprompt = "You can say yes or no";
         console.log('currentpackignItem->', this.attributes['currentPackingItem']);
         if (this.attributes['currentPackingItem']) {
             var currentPackingItem = this.attributes['currentPackingItem']
             var currentPackingItemIndex = packingList.indexOf(currentPackingItem);
-            // packingList.forEach(function (element) {
-            //     currentPackingItemIndex++;
-            //     if (element == currentPackingItem) {
-            //         break;
-            //     }
-            // });
         }
         //say the results
         if (!this.attributes["currentPackingItem"]) {
