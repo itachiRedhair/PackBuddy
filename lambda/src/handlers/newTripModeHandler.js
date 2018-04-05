@@ -1,6 +1,9 @@
 var Alexa = require("alexa-sdk");
 const constants = require("./../constants");
 var ddb = require("./../utilities/ddbController");
+var tripSchema = require("./../assets/entrySchema");
+var fetchWeather = require("./../utilities/weather")
+var generatePackingList = require("./../utilities/createPackingList")
 
 const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
@@ -12,12 +15,6 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
     'NewTripIntent': function () {
         var filledSlots = delegateSlotCollection.call(this);
-        //Now let's recap the trip
-        this.attributes['fromCity'] = this.event.request.intent.slots.fromCity.value;
-        this.attributes['toCity'] = this.event.request.intent.slots.toCity.value;
-        this.attributes['duration'] = this.event.request.intent.slots.duration.value;
-        this.attributes['date'] = this.event.request.intent.slots.date.value;
-        this.attributes['purpose'] = this.event.request.intent.slots.purpose.value;
         // speechOutput= " from " + fromCity + " to " + toCity + " on " + date + " for " + duration + " days " + " for " + purpose;
 
         //say the results
@@ -28,14 +25,17 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
         var userId = this.event.session.user.userId;
 
-        ddb.insertTrip(userId).then(data => {
-            console.log('data of dynamodb', data);
-            this.emitWithState("NewSession");
-        }).catch(error => {
-            console.log('error of dynamodb', error);
+        generateTrip.call(this).then(packingSchema => {
+            ddb.insertTrip(userId, packingSchema)
+                .then(data => {
+                    console.log('data of dynamodb', data);
+                    // this.attr 
+                    this.emitWithState("NewSession");
+                    
+                }).catch(error => {
+                    console.log('error of dynamodb', error);
+                });
         });
-
-
     },
 
     'AMAZON.HelpIntent': function () {
@@ -102,5 +102,42 @@ function clearState() {
     delete this.attributes['STATE'];
 }
 
+function generateTrip() {
+    return new Promise((resolve, reject) => {
+        let fromCity = this.event.request.intent.slots.fromCity.value;
+        let toCity = this.event.request.intent.slots.toCity.value;
+        let duration = this.event.request.intent.slots.duration.value;
+        let date = this.event.request.intent.slots.date.value;
+        let purpose = this.event.request.intent.slots.purpose.value;
+
+        fromCity = fromCity.split(" ").join("");
+        toCity = toCity.split(" ").join("");
+        date = new Date(date).getTime() / 1000;
+
+        tripSchema.trip_info.from_city = fromCity;
+        tripSchema.trip_info.to_city = toCity;
+        tripSchema.trip_info.duration = duration;
+        tripSchema.trip_info.date = date;
+        tripSchema.trip_info.purpose = purpose;
+        tripSchema.trip_info.trip_name = fromCity + "_" + toCity + "_" + date;
+        tripSchema.trip_id = fromCity + "_" + toCity + "_" + date;
+        console.log('tripSchema', tripSchema);
+
+        generatePackingList(toCity, date, duration)
+            .then(list => {
+                let count = 0;
+                for (var listKey in list) {
+                    const len = Object.keys(list[listKey]).length;
+                    count += len;
+                }
+                tripSchema.packing_list = list;
+                tripSchema.total_item_count = count;
+                
+                resolve(tripSchema);
+            }).catch(err => reject);
+    });
+
+
+}
 
 module.exports = newTripModeHandler;

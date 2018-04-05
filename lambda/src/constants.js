@@ -16,6 +16,7 @@ module.exports = Object.freeze({
     },
 
     packingStatus: {
+        NOT_STARTED: "_NOT_STARTED",
         STARTED: "_STARTED",
         IN_PROGRESS: "_IN_PROGRESS",
         COMPLETED: "_COMPLETED"
