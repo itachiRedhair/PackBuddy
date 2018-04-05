@@ -2,8 +2,9 @@ var Alexa = require("alexa-sdk");
 const constants = require("./../constants");
 var ddb = require("./../utilities/ddbController");
 var tripSchema = require("./../assets/entrySchema");
-var fetchWeather = require("./../utilities/weather")
-var generatePackingList = require("./../utilities/createPackingList")
+var fetchWeather = require("./../utilities/weather");
+var generatePackingList = require("./../utilities/packingListController").createPackingList;
+var initializePackingSession = require("./../utilities/packingListController").setPackingSession;
 
 const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
@@ -28,12 +29,14 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
         generateTrip.call(this).then(packingSchema => {
             ddb.insertTrip(userId, packingSchema)
                 .then(data => {
-                    console.log('data of dynamodb', data);
-                    // this.attr 
-                    this.emitWithState("NewSession");
+                    console.log('in genrate trip promise return packignschema', packingSchema);
                     
+                    initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
+
+                    // console.log('data of dynamodb', data);
+                    this.emitWithState("NewSession");
                 }).catch(error => {
-                    console.log('error of dynamodb', error);
+                    // console.log('error of dynamodb', error);
                 });
         });
     },
@@ -132,12 +135,11 @@ function generateTrip() {
                 }
                 tripSchema.packing_list = list;
                 tripSchema.total_item_count = count;
-                
+
                 resolve(tripSchema);
             }).catch(err => reject);
+
     });
-
-
 }
 
 module.exports = newTripModeHandler;

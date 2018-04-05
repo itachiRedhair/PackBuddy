@@ -20,8 +20,8 @@ function getLastTripID(userId) {
 
         documentClient.get(params, (err, data) => {
             if (err) {
-                console.log("Error when calling DynamoDB");
-                console.log(err, err.stack); // an error occurred
+                // console.log("Error when calling DynamoDB");
+                // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 //console.log(data); // successful response
@@ -42,8 +42,8 @@ function getFromDDB(userId) {
 
         documentClient.get(params, (err, data) => {
             if (err) {
-                console.log("Error when calling DynamoDB");
-                console.log(err, err.stack); // an error occurred
+                // console.log("Error when calling DynamoDB");
+                // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 //console.log(data); // successful response
@@ -55,7 +55,7 @@ function getFromDDB(userId) {
 
 function insertTrip(userId, tripEntry) {
     return new Promise((resolve, reject) => {
-        console.log('here in dynamodb with userId ', userId)
+        // console.log('here in dynamodb with userId ', userId)
         var params = {
             TableName: constants.tripDataTable,
             Key: {
@@ -70,8 +70,8 @@ function insertTrip(userId, tripEntry) {
 
         documentClient.update(params, (err, data) => {
             if (err) {
-                console.log("Error when calling DynamoDB");
-                console.log(err, err.stack); // an error occurred
+                // console.log("Error when calling DynamoDB");
+                // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 // console.log(data); // successful response
@@ -83,7 +83,7 @@ function insertTrip(userId, tripEntry) {
 
 function updateTrip(userId, editThis) {
     return new Promise((resolve, reject) => {
-        console.log('here in dynamodb with userId ', userId)
+        // console.log('here in dynamodb with userId ', userId)
         var params = {
             TableName: constants.tripDataTable,
             Key: {
@@ -97,8 +97,8 @@ function updateTrip(userId, editThis) {
 
         documentClient.update(params, (err, data) => {
             if (err) {
-                console.log("Error when calling DynamoDB");
-                console.log(err, err.stack); // an error occurred
+                // console.log("Error when calling DynamoDB");
+                // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 // console.log(data); // successful response

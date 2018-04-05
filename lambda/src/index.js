@@ -25,14 +25,14 @@ exports.handler = function (event, context) {
 
 var handler = {
     'LaunchRequest': function () {
-        console.log('in Launch Request in index.js');
+        // console.log('in Launch Request in index.js');
         this.handler.state = constants.states.LAUNCH;
         this.emitWithState("LaunchRequest");
     },
     'SessionEndedRequest': function () {
         // this.handler.state = states.LAUNCH;
         this.emit(':saveState', true);
-        console.log('Session ended with reason: ' + this.event.request.reason);
+        // console.log('Session ended with reason: ' + this.event.request.reason);
     },
     'AMAZON.StopIntent': function () {
         this.response.speak(this.t("Goodbye_MSG"));
