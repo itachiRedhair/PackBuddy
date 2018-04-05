@@ -28,7 +28,7 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
         var userId = this.event.session.user.userId;
 
-        ddb.insertOrUpdateDDB(userId).then(data => {
+        ddb.insertTrip(userId).then(data => {
             console.log('data of dynamodb', data);
             this.emitWithState("NewSession");
         }).catch(error => {

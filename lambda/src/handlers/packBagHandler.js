@@ -9,6 +9,7 @@ var packingList = [
     'toothbrush'
 ]
 
+var packingStatus = '';
 
 const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
 
@@ -20,21 +21,24 @@ const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
 
     'packBagIntent': function () {
         var reprompt = "You can say yes or no";
+
         console.log('currentpackignItem->', this.attributes['currentPackingItem']);
-        if (this.attributes['currentPackingItem']) {
-            var currentPackingItem = this.attributes['currentPackingItem']
-            var currentPackingItemIndex = packingList.indexOf(currentPackingItem);
-        }
-        //say the results
-        if (!this.attributes["currentPackingItem"]) {
-            this.attributes['currentPackingItem'] = packingList[0];
-            this.response.speak("Let's start with " + this.attributes['currentPackingItem']).listen(reprompt);
-        } else if (currentPackingItemIndex <= packingList.length) {
-            this.attributes['currentPackingItem'] = packingList[++currentPackingItemIndex];
-            this.response.speak("Now pack " + this.attributes['currentPackingItem']).listen(reprompt);
-        } else {
-            this.response.speak("You are done");
-            delete this.attributes['currentPackingItem'];
+
+        switch (getPackingStatus(this.attributes)) {
+            case constants.packingStatus.STARTED:
+                this.attributes['currentPackingItem'] = packingList[0];
+                this.response.speak("Let's start with " + this.attributes['currentPackingItem']).listen(reprompt);
+                break;
+            case constants.packingStatus.IN_PROGRESS:
+                this.attributes['currentPackingItem'] = packingList[++packingList.indexOf(this.attributes['currentPackingItem'])];
+                this.response.speak("Now pack " + this.attributes['currentPackingItem']).listen(reprompt);
+                break;
+            case constants.packingStatus.COMPLETED:
+                this.response.speak("You are done");
+                delete this.attributes['currentPackingItem'];
+                break;
+            default:
+                this.response.speak("There is some problem. Sorry for inconvenience.");
         }
 
         this.emit(":responseReady");
@@ -48,12 +52,7 @@ const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
     },
 
     'AMAZON.YesIntent': function () {
-        if (this.attributes['currentPackingItem']) {
-
-            this.emitWithState('packBagIntent');
-        } else {
-            this.emitWithState('packBagIntent');
-        }
+        this.emitWithState('packBagIntent');
     },
 
     'AMAZON.NoIntent': function () {
@@ -86,5 +85,15 @@ function clearState() {
     delete this.attributes['STATE'];
 }
 
+getPackingStatus = (attributes) => {
+    currentPackingItem = attributes['currentPackingItem'];
+    if (currentPackingItem === undefined) {
+        return constants.packingStatus.STARTED;
+    } else if (packingList.indexOf(currentPackingItem) < packingList.length) {
+        return constants.packingStatus.IN_PROGRESS
+    } else if (packingList.indexOf(currentPackingItem) === packingList.length) {
+        return constants.packingStatus.COMPLETED;
+    }
+}
 
 module.exports = packBagHandler;

@@ -13,5 +13,11 @@ module.exports = Object.freeze({
         NEW_TRIP: "_NEW_TRIP",
         PACKING: "_PACKING",
         EXISTING_TRIP: "_EXISTING_TRIP"
+    },
+
+    packingStatus: {
+        STARTED: "_STARTED",
+        IN_PROGRESS: "_IN_PROGRESS",
+        COMPLETED: "_COMPLETED"
     }
 });
