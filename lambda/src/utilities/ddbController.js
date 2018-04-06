@@ -2,6 +2,7 @@
 
 let AWS = require('aws-sdk');
 let constants = require('./../constants.js');
+let session = require('./../constants.js').session;
 
 var documentClient = new AWS.DynamoDB.DocumentClient({
     convertEmptyValues: true
@@ -64,7 +65,7 @@ function insertTrip(userId, tripEntry) {
             UpdateExpression: "SET trip_list." + tripEntry['trip_id'] + " = :trip_info, last_trip_key = :last_trip_val",
             ExpressionAttributeValues: {
                 ":trip_info": tripEntry,
-                ":last_trip_val":  tripEntry['trip_id']
+                ":last_trip_val": tripEntry['trip_id']
             }
         };
 
@@ -81,7 +82,11 @@ function insertTrip(userId, tripEntry) {
     });
 }
 
-function updateTrip(userId, editThis) {
+function updatePackingList() {
+    let userId = this.event.session.user.userId;
+    let tripId = this.attributes[session.CURRENT_TRIP];
+    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    let packingStatus = this.attributes[session.CURRENT_PACKING_STATUS];
     return new Promise((resolve, reject) => {
         // console.log('here in dynamodb with userId ', userId)
         var params = {
@@ -89,9 +94,10 @@ function updateTrip(userId, editThis) {
             Key: {
                 userId: userId
             },
-            UpdateExpression: "SET trip_list." + "" + " = :value",
+            UpdateExpression: "SET trip_list." + tripId + ".packing_list = :pl , trip_list." + tripId + ".packing_status=:ps",
             ExpressionAttributeValues: {
-                ":value": editThis
+                ":pl": packingList,
+                ":ps": packingStatus
             }
         };
 
@@ -109,4 +115,4 @@ function updateTrip(userId, editThis) {
 }
 
 
-module.exports = { insertTrip, getFromDDB, updateTrip, getLastTripID }
+module.exports = { insertTrip, getFromDDB, updatePackingList, getLastTripID }
