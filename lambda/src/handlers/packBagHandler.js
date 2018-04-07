@@ -1,3 +1,5 @@
+'use strict';
+
 var Alexa = require("alexa-sdk");
 var ddb = require('./../utilities/ddbController')
 var getRandomString = require("./../utilities/randomStrings").getRandomString;

@@ -1,3 +1,4 @@
+'use strict';
 var Alexa = require("alexa-sdk");
 var ddb = require("./../utilities/ddbController");
 var tripSchema = require("./../assets/entrySchema");

@@ -7,7 +7,20 @@ let session = require('./../constants.js').session;
 var documentClient = new AWS.DynamoDB.DocumentClient({
     convertEmptyValues: true
 });
-var dynamodb = new AWS.DynamoDB();
+
+//setting environment variable
+var env = process.env.NODE_ENV || 'development';
+
+if(env==='development'){
+    var config = {
+        "apiVersion": "2012-08-10",
+        "accessKeyId": "abcde",
+        "secretAccessKey": "abcde",
+        "region":"us-east-1",
+        "endpoint": "http://localhost:3333"
+    }
+    var dynamodb = new AWS.DynamoDB(config);
+}
 
 function getLastTripID(userId) {
     return new Promise((resolve, reject) => {
