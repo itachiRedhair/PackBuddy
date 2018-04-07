@@ -1,3 +1,4 @@
+'use strict';
 var Alexa = require("alexa-sdk");
 const constants = require("./../constants");
 var ddb = require("./../utilities/ddbController");
@@ -9,7 +10,7 @@ var initializePackingSession = require("./../utilities/packingListController").s
 const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
 
     'NewSession': function () {
-        const message = "Tell me about your trip. Where are you going or when will you be leaving?";
+        const message = "Tell me about your trip. Where are you going?";
         this.response.speak(message).listen("You can say I am going to Washington");
         this.emit(":responseReady");
     },

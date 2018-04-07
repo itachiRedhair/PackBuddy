@@ -1,3 +1,4 @@
+'use strict';
 var Alexa = require("alexa-sdk");
 const constants = require("./../constants")
 

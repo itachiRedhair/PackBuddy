@@ -1,18 +1,54 @@
+'use strict';
 var expect = require('chai').expect;
 var index = require('./../index');
 
 const context = require('aws-lambda-mock-context');
-const ctx = context();
+
 
 //events
-const inocationEvent = require("./events/invocation.json")
+const invocationEvent = require("./events/invocation.json")
+const invocationEventYes = require("./events/invocationReplyYes.json")
+const invocationEventNo = require("./events/invocationReplyNo.json")
 
 describe("Testing an invocation", function () {
-    var speechResponse = null
-    var speechError = null
+    let speechResponse = null
+    let speechError = null
 
     before(function (done) {
-        index.handler(inocationEvent, ctx);
+        let ctx = context();
+        index.handler(invocationEvent, ctx);
+
+        ctx.Promise
+            .then(resp => { speechResponse = resp; done(); })
+            .catch(err => { speechError = err; done(); })
+    })
+
+    describe("The invocation response is structurally correct for Alexa Speech Services", function () {
+        it('should not have errored', function () {
+            expect(speechError).to.be.null
+        })
+
+        it('should have a speechlet response', function () {
+            expect(speechResponse.response).not.to.be.null
+        })
+
+        it("should have a spoken response", () => {
+            expect(speechResponse.response.outputSpeech).not.to.be.null
+        })
+
+        it("should have correct spoken response",()=>{
+            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Hi I am Pack Buddy. Do you want help with packing? </speak>")
+        })
+    })
+})
+
+describe("Testing 'yes' response for invocation", function () {
+    let speechResponse = null
+    let speechError = null
+
+    before(function (done) {
+        let ctx =context();
+        index.handler(invocationEventYes, ctx);
 
         ctx.Promise
             .then(resp => { speechResponse = resp; done(); })
@@ -24,10 +60,6 @@ describe("Testing an invocation", function () {
             expect(speechError).to.be.null
         })
 
-        it('should have a version', function () {
-            expect(speechResponse.version).not.to.be.null
-        })
-
         it('should have a speechlet response', function () {
             expect(speechResponse.response).not.to.be.null
         })
@@ -36,9 +68,8 @@ describe("Testing an invocation", function () {
             expect(speechResponse.response.outputSpeech).not.to.be.null
         })
 
-        it("should end the alexa session", function () {
-            expect(speechResponse.response.shouldEndSession).not.to.be.null
-            expect(speechResponse.response.shouldEndSession).to.be.true
+        it("should have correct spoken response",()=>{
+            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Tell me about your trip. Where are you going? </speak>")
         })
     })
 })

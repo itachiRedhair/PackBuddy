@@ -1,3 +1,5 @@
+'use strict';
+
 var packingSchemaFixed = require('../assets/packingItems').packingItemsFixed;
 var packingSchemaWeather = require('../assets/packingItems').packingItemWeather;
 var fetchWeatherData = require('../utilities/weather').getWeatherData;
