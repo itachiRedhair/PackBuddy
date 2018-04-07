@@ -1,3 +1,5 @@
+'use strict';
+
 var strings = {
     packPrompt: [
         "Let's pack",
