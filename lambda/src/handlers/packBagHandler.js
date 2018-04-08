@@ -1,51 +1,41 @@
+'use strict';
 
 var Alexa = require("alexa-sdk");
-const constants = require("./../constants");
 var ddb = require('./../utilities/ddbController')
+var getRandomString = require("./../utilities/randomStrings").getRandomString;
 
-var packingList = [
-    'books',
-    'clothes',
-    'toothbrush'
-]
+//constants
+const states = require("./../constants").states;
+const session = require("./../constants").session;
+const packingStatus = require("./../constants").packingStatus;
+const packingItemStatus = require("./../constants").packingItemStatus;
 
-var packingStatus = '';
-
-const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
+const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
 
     'NewSession': function () {
         const message = "Let's start packing. Shall we?";
         this.response.speak(message).listen("Do you want to start packing right now?");
-        this.attributes['JUST_PACKING_STARTED'] = true;
         this.emit(":responseReady");
     },
 
     'packBagIntent': function () {
         let reprompt = "You can say yes or no";
 
-        // if (this.attributes['JUST_PACKING_STARTED']) {
-        //     this.attributes['JUST_PACKING_STARTED'] = false;
-        //     this.attributes['PACKING_STATUS'] = constants.packingStatus.IN_PROGRESS;
-        //     this.attributes['current_packing_list'] = ddb.getLastTripID
-
-
-        // } else {
-
-        // }
         getPackingStatus.call(this);
 
-        let item = this.attributes['current_packing_item'];
+        let item = this.attributes[session.CURRENT_PACKING_ITEM];
 
-        switch (this.attributes['current_packing_status']) {
-            case constants.packingStatus.STARTED:
-                this.response.speak("Let's start with " + item.name).listen(reprompt);
+        switch (this.attributes[session.CURRENT_PACKING_STATUS]) {
+            // case packingStatus.STARTED:
+            //     this.response.speak("Let's start with " + item.name).listen(reprompt);
+            //     break;
+            case packingStatus.IN_PROGRESS:
+                this.response.speak(getRandomString('packPrompt') +" "+ item.name).listen(reprompt);
                 break;
-            case constants.packingStatus.IN_PROGRESS:
-                this.response.speak("Now pack " + item.name).listen(reprompt);
-                break;
-            case constants.packingStatus.COMPLETED:
+            case packingStatus.COMPLETED:
                 clearState.call(this);
-                this.response.speak("You are done");
+                ddb.updatePackingList.call(this);
+                this.response.speak("Your packing is completed. Have a nice journey. Feel free to call me again for packing. See Ya!");
                 break;
             default:
                 this.response.speak("There is some problem. Sorry for inconvenience.");
@@ -62,38 +52,16 @@ const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
     },
 
     'AMAZON.YesIntent': function () {
-        //anand's code
-        // if (this.attributes['JUST_PACKING_STARTED']) {
-        //     // Start putting thiusngs in the bad
-        //     this.emit('packBagIntent');
-        // } else {
 
-        // }
-
-        //dont know who's code
-        // if (getPackingStatus() !== constants.packingStatus.COMPLETED) {
-        //     this.emitWithState('packBagIntent');
-        // } else {
-        //     this.response.speak("You are done with the packing.");
-        //     this.emit(":responseReady");
-        // }
-
-        // if (this.attributes['current_packing_status'] === constants.packingStatus.NOT_STARTED) {
-        //     this.attributes['current_packing_status'] === constants.packingStatus.STARTED;
-        //     this.emitWithState('packBagIntent');
-        // } else if (this.attributes['current_packing_status'] === constants.packingStatus.IN_PROGRESS) {
-        //     this.emitWithState('packBagIntent');
-        // }
-
-        switch (this.attributes['current_packing_status']) {
-            case constants.packingStatus.NOT_STARTED:
-                this.attributes['current_packing_status'] === constants.packingStatus.STARTED;
+        switch (this.attributes[session.CURRENT_PACKING_STATUS]) {
+            case packingStatus.NOT_STARTED:
+                // this.attributes[session.CURRENT_PACKING_STATUS] === packingStatus.STARTED;
                 this.emitWithState('packBagIntent');
                 break;
-            case constants.packingStatus.IN_PROGRESS:
-                var currentPackingItemKey = this.attributes['current_packing_item_key'];
-                var currentPackingCategoryKey = this.attributes['current_packing_category_key'];
-                this.attributes['current_packing_list'][currentPackingCategoryKey][currentPackingItemKey]['status'] = "PACKED";
+            case packingStatus.IN_PROGRESS:
+                var currentPackingItemKey = this.attributes[session.CURRENT_PACKING_ITEM_KEY];
+                var currentPackingCategoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY];
+                this.attributes[session.CURRENT_PACKING_LIST][currentPackingCategoryKey][currentPackingItemKey]['status'] = packingItemStatus.PACKED;
                 this.emitWithState('packBagIntent');
                 break;
             default:
@@ -104,23 +72,17 @@ const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
     },
 
     'AMAZON.NoIntent': function () {
-        // if (this.attributes['JUST_PACKING_STARTED']) {
-        //     // User said no when asked if he/she wanted to start packing right away
-        //     this.response.speak('Okay, I am saving the information. You can resume later');
-        // } else {
-        //     // User said no in any other case
-        // }
 
-        switch (this.attributes['current_packing_status']) {
-            case constants.packingStatus.NOT_STARTED:
+        switch (this.attributes[session.CURRENT_PACKING_STATUS]) {
+            case packingStatus.NOT_STARTED:
                 clearState.call(this);
                 this.response.speak('Ok, see you next time!');
                 this.emit(':responseReady');
                 break;
-            case constants.packingStatus.IN_PROGRESS:
-                var currentPackingItemKey = this.attributes['current_packing_item_key'];
-                var currentPackingCategoryKey = this.attributes['current_packing_category_key'];
-                this.attributes['current_packing_list'][currentPackingCategoryKey][currentPackingItemKey]['status'] = "NOT_INTERESTED";
+            case packingStatus.IN_PROGRESS:
+                var currentPackingItemKey = this.attributes[session.CURRENT_PACKING_ITEM_KEY];
+                var currentPackingCategoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY];
+                this.attributes[session.CURRENT_PACKING_LIST][currentPackingCategoryKey][currentPackingItemKey]['status'] = packingItemStatus.NOT_INTERESTED;
                 this.emitWithState('packBagIntent');
                 break;
             default:
@@ -131,12 +93,14 @@ const packBagHandler = Alexa.CreateStateHandler(constants.states.PACKING, {
 
     'AMAZON.StopIntent': function () {
         clearState.call(this);
+        ddb.updatePackingList.call(this);
         this.response.speak("Good Bye");
         this.emit(":responseReady");
     },
 
     'SessionEndedRequest': function () {
         clearState.call(this);
+        ddb.updatePackingList.call(this);
         this.emit(':saveState', true)
     },
 
@@ -155,20 +119,20 @@ function clearState() {
 
 function getPackingStatus() {
 
-    var packingList = this.attributes['current_packing_list'];
-    console.log('in getPackingStatus current_packing_list', this.attributes['current_packing_list']);
+    var packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    console.log('in getPackingStatus current_packing_list', this.attributes[session.CURRENT_PACKING_LIST]);
     for (var categoryKey in packingList) {
         category = packingList[categoryKey]
 
         for (var itemKey in category) {
             item = category[itemKey];
 
-            if (category[itemKey].status === 'NOT_PACKED') {
-                this.attributes['current_packing_category_key'] = categoryKey;
-                this.attributes['current_packing_item_key'] = itemKey;
-                this.attributes['current_packing_item'] = item;
-                console.log('in getPackingStatus current_packing_item--->', this.attributes['current_packing_item']);
-                this.attributes['current_packing_status'] = constants.packingStatus.IN_PROGRESS;
+            if (category[itemKey].status === packingItemStatus.NOT_PACKED) {
+                this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = categoryKey;
+                this.attributes[session.CURRENT_PACKING_ITEM_KEY] = itemKey;
+                this.attributes[session.CURRENT_PACKING_ITEM] = item;
+                console.log('in getPackingStatus current_packing_item--->', this.attributes[session.CURRENT_PACKING_ITEM]);
+                this.attributes[session.CURRENT_PACKING_STATUS] = packingStatus.IN_PROGRESS;
                 // return this.attributes['current_packing_status'];
                 return;
             }
@@ -176,7 +140,7 @@ function getPackingStatus() {
         }
     }
 
-    this.attributes['current_packing_status'] = constants.packingStatus.COMPLETED;
+    this.attributes[session.CURRENT_PACKING_STATUS] = packingStatus.COMPLETED;
     // return this.attributes['current_packing_status'];
     return;
 }

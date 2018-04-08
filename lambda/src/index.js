@@ -1,5 +1,6 @@
 'use strict';
 var Alexa = require("alexa-sdk");
+var AWS = require('aws-sdk');
 var languageStrings = require('./strings');
 var constants = require("./constants")
 //handlers import
@@ -7,11 +8,27 @@ var newSessionHandler = require("./handlers/newSessionHandler");
 var newTripModeHandler = require("./handlers/newTripModeHandler");
 var packBagHandler = require("./handlers/packBagHandler");
 
+//setting environment variable
+var env = process.env.NODE_ENV || 'development';
+
+
 //handler function
 exports.handler = function (event, context) {
     var alexa = Alexa.handler(event, context);
     alexa.resources = languageStrings;
     alexa.appId = constants.appId;
+
+    if(env === 'development') {
+        var config = {
+            "apiVersion": "2012-08-10",
+            "accessKeyId": "abcde",
+            "secretAccessKey": "abcde",
+            "region":"us-east-1",
+            "endpoint": "http://localhost:3333"
+        }
+        alexa.dynamoDBClient =new AWS.DynamoDB(config);  
+    }
+
     alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
     alexa.registerHandlers(
         newSessionHandler,

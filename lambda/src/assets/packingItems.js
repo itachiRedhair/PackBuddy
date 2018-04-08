@@ -3,35 +3,35 @@ var packingItemsFixed = {
     toiletries: {
         'deodorant': {
             'name': 'deodorant',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'flosss': {
             'name': 'flosss',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'hairbrush': {
             'name': 'hairbrush',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'toothbrush': {
             'name': 'toothbrush',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'toothpaste': {
             'name': 'toothpaste',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
@@ -39,52 +39,52 @@ var packingItemsFixed = {
     },
     clothing: {
         'shirt': {
-            'name': 'toothpaste',
-            'status': 'NOT_PACKED',
+            'name': 'shirt',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'jeans': {
-            'name': 'toothpaste',
-            'status': 'NOT_PACKED',
+            'name': 'jeans',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
-        'regular_clothes': {
-            'name': 'toothpaste',
-            'status': 'NOT_PACKED',
+        'regular clothes': {
+            'name': 'regular clothes',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         }
     },
     electronics: {
-        'phone_charger': {
+        'phone charger': {
             'name': 'phone_charger',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'phone': {
             'name': 'phone',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
         'laptop': {
             'name': 'laptop',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         },
-        'power_bank': {
+        'power bank': {
             'name': 'power_bank',
-            'status': 'NOT_PACKED',
+            'status': '_NOT_PACKED',
             'meta_info': {},
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
@@ -97,21 +97,21 @@ var packingItemWeather = {
         'clothing': {
             'sweater': {
                 'name': 'sweater',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
             },
             'blanket': {
                 'name': 'blanket',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
             },
             'jacket': {
                 'name': 'jacket',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
@@ -122,14 +122,14 @@ var packingItemWeather = {
         'clothing': {
             'umbrella': {
                 'name': 'umbrella',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
             },
-            'sleeveless_clothes': {
+            'sleeveless clothes': {
                 'name': 'sleeveless_clothes',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
@@ -139,16 +139,16 @@ var packingItemWeather = {
     },
     rainy: {
         'clothing': {
-            'rain_coat': {
+            'rain coat': {
                 'name': 'rain_coat',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'
             },
             'umbrella': {
                 'name': 'umbrella',
-                'status': 'NOT_PACKED',
+                'status': '_NOT_PACKED',
                 'meta_info': {},
                 'packed_on': 'null',
                 'preferred_baggage': 'cabin'

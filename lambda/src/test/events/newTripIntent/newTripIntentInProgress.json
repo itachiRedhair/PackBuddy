@@ -1,0 +1,197 @@
+{
+	"version": "1.0",
+	"session": {
+		"new": false,
+		"sessionId": "amzn1.echo-api.session.4ba5dfdb-ce88-4026-993b-fe9b7712e168",
+		"application": {
+			"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+		},
+		"attributes": {
+			"_CURRENT_PACKING_ITEM_KEY": "null",
+			"_CURRENT_PACKING_STATUS": "_NOT_STARTED",
+			"_CURRENT_TRIP": "NewYork_Chicago_1523145600",
+			"_CURRENT_PACKING_CATEGORY_KEY": "null",
+			"_CURRENT_PACKING_LIST": {
+				"clothing": {
+					"jacket": {
+						"name": "jacket",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"shirt": {
+						"name": "shirt",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"sweater": {
+						"name": "sweater",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"blanket": {
+						"name": "blanket",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"jeans": {
+						"name": "jeans",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"regular clothes": {
+						"name": "regular clothes",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					}
+				},
+				"electronics": {
+					"phone charger": {
+						"name": "phone_charger",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"laptop": {
+						"name": "laptop",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"phone": {
+						"name": "phone",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"power bank": {
+						"name": "power_bank",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					}
+				},
+				"toiletries": {
+					"hairbrush": {
+						"name": "hairbrush",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"toothbrush": {
+						"name": "toothbrush",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"toothpaste": {
+						"name": "toothpaste",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"deodorant": {
+						"name": "deodorant",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					},
+					"flosss": {
+						"name": "flosss",
+						"preferred_baggage": "cabin",
+						"packed_on": "null",
+						"status": "_NOT_PACKED",
+						"meta_info": {}
+					}
+				}
+			},
+			"STATE": "_NEW_TRIP",
+			"_CURRENT_PACKING_ITEM": "null"
+		},
+		"user": {
+			"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+		}
+	},
+	"context": {
+		"AudioPlayer": {
+			"playerActivity": "IDLE"
+		},
+		"Display": {
+			"token": ""
+		},
+		"System": {
+			"application": {
+				"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+			},
+			"user": {
+				"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+			},
+			"device": {
+				"deviceId": "amzn1.ask.device.AE4EV6AR3RR7CQJXKQJPK64WMGOOFRV5LXABTUIHFFQG3TRFB7POAREZ3XEOPZPIDOQ7LUZOZXSKPL4I6YYVYZZSJECHUNYSNI5NDSBKCZK5NCBUJTQCIIWRZMRZHQQ5D5LFNMI25S7VE4UCRUU45FUE5ZHA",
+				"supportedInterfaces": {
+					"AudioPlayer": {},
+					"Display": {
+						"templateVersion": "1.0",
+						"markupVersion": "1.0"
+					}
+				}
+			},
+			"apiEndpoint": "https://api.eu.amazonalexa.com",
+			"apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmQ4YWI0NDI2LTY2Y2EtNGRmZC1iZDBkLTdmMmMwMjQxOTQxMyIsImV4cCI6MTUyMzEwMzA1NCwiaWF0IjoxNTIzMDk5NDU0LCJuYmYiOjE1MjMwOTk0NTQsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUU0RVY2QVIzUlI3Q1FKWEtRSlBLNjRXTUdPT0ZSVjVMWEFCVFVJSEZGUUczVFJGQjdQT0FSRVozWEVPUFpQSURPUTdMVVpPWlhTS1BMNEk2WVlWWVpaU0pFQ0hVTllTTkk1TkRTQktDWks1TkNCVUpUUUNJSVdSWk1SWkhRUTVENUxGTk1JMjVTN1ZFNFVDUlVVNDVGVUU1WkhBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUZBRTJHQVVSVEZHQVhEWEdTU1lFWFZTSkRYSFlZT05XSzRIS1dLRlc3NUhNSkM1Q1FNVktPMzNRUU9OR0xKUkVHUldKQ0hKV1FFNlpaQTdSSk9MTkVTSkpGUVlSR0dDUDc1UUw3QUJGRkJYQVFGWVBNRFFYWkkzR1ZBWERGNVcySk9NNlRXVlVGU1FRVVk1WTYzTU9SNFpRUU1QREZNVUlEVVBCTTVNV1NNNFBYQUhQVko0Sk1SQjRNWlZDRks2SkRRVTNWQUxMQ0RNSkVZIn19.TO4u2g7u057SPvs7H1SBpilekGnHqE1n2484yOBiUQkwmzJlA21g2F3PDH04s-gUreTTQ8kdtdy7Vm3klVlDkOjW2lwm6xLAHg5FSOpN4tMZYjC4BiCQcB4cYngtGhU0d5BzFJcGqeop6XSJRJhkKB_CjNfJKEONT4XDvVdAvJFLR_148t7T2H_wLqyfHFRyFK_92ZKhbqQoAjc9LnSVVmMFgttJzTVOKcriddm7Cw97ct9GemZACQZLW5wdLmAVGPt-loAk5u7Hv4UrXFzrJnw21uFYnGHjNiDuHjKhuITZCRCW_DNn3czlYoTeGcMndiSVquDfB1z2H7FmB8xPRw"
+		}
+	},
+	"request": {
+		"type": "IntentRequest",
+		"requestId": "amzn1.echo-api.request.8fd18b57-b598-4411-8c78-4d70bd39478f",
+		"timestamp": "2018-04-07T11:10:54Z",
+		"locale": "en-GB",
+		"intent": {
+			"name": "NewTripIntent",
+			"confirmationStatus": "NONE",
+			"slots": {
+				"duration": {
+					"name": "duration",
+					"confirmationStatus": "NONE"
+				},
+				"date": {
+					"name": "date",
+					"confirmationStatus": "NONE"
+				},
+				"toCity": {
+					"name": "toCity",
+					"value": "Chicago",
+					"confirmationStatus": "NONE"
+				},
+				"purpose": {
+					"name": "purpose",
+					"confirmationStatus": "NONE"
+				},
+				"fromCity": {
+					"name": "fromCity",
+					"value": "New York",
+					"confirmationStatus": "NONE"
+				}
+			}
+		},
+		"dialogState": "IN_PROGRESS"
+	}
+}

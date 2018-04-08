@@ -1,7 +1,12 @@
+'use strict';
+
 var packingSchemaFixed = require('../assets/packingItems').packingItemsFixed;
 var packingSchemaWeather = require('../assets/packingItems').packingItemWeather;
 var fetchWeatherData = require('../utilities/weather').getWeatherData;
-const constants = require("./../constants");
+
+//constants
+const packingStatus = require("./../constants").packingStatus;
+const session = require("./../constants").session;
 
 function createPackingList(destination, date, duration) {
     return new Promise((resolve, reject) => {
@@ -34,13 +39,13 @@ function getWeatherCondition(temperature) {
 
 function setPackingSession(tripId, packingList) {
     console.log('in setpackingsession packingList', packingList);
-    this.attributes['current_trip'] = tripId;
-    this.attributes['current_packing_list'] = packingList;
-    this.attributes['current_packing_item'] = 'null';
-    this.attributes['current_packing_item_key'] = 'null';
-    this.attributes['current_packing_category_key'] = 'null';
-    this.attributes['current_packing_status'] = constants.packingStatus.NOT_STARTED;
-    console.log('in setpackingsession current_packing_list', this.attributes['current_packing_list']);
+    this.attributes[session.CURRENT_TRIP] = tripId;
+    this.attributes[session.CURRENT_PACKING_LIST] = packingList;
+    this.attributes[session.CURRENT_PACKING_ITEM] = 'null';
+    this.attributes[session.CURRENT_PACKING_ITEM_KEY] = 'null';
+    this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
+    this.attributes[session.CURRENT_PACKING_STATUS] = packingStatus.NOT_STARTED;
+    console.log('in setpackingsession current_packing_list', this.attributes[session.CURRENT_PACKING_LIST]);
 }
 
 module.exports = { createPackingList, setPackingSession };

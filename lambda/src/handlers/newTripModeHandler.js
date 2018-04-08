@@ -1,15 +1,18 @@
+'use strict';
 var Alexa = require("alexa-sdk");
-const constants = require("./../constants");
 var ddb = require("./../utilities/ddbController");
 var tripSchema = require("./../assets/entrySchema");
 var fetchWeather = require("./../utilities/weather");
 var generatePackingList = require("./../utilities/packingListController").createPackingList;
 var initializePackingSession = require("./../utilities/packingListController").setPackingSession;
 
-const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
+//constants
+const states = require("./../constants").states;
+
+const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
 
     'NewSession': function () {
-        const message = "Tell me about your trip. Where are you going or when will you be leaving?";
+        const message = "Tell me about your trip. Where are you going?";
         this.response.speak(message).listen("You can say I am going to Washington");
         this.emit(":responseReady");
     },
@@ -22,23 +25,25 @@ const newTripModeHandler = Alexa.CreateStateHandler(constants.states.NEW_TRIP, {
         // this.response.speak(speechOutput);
         // this.emit(":responseReady");
 
-        this.handler.state = constants.states.PACKING;
+        this.handler.state = states.PACKING;
 
         var userId = this.event.session.user.userId;
 
-        generateTrip.call(this).then(packingSchema => {
-            ddb.insertTrip(userId, packingSchema)
-                .then(data => {
-                    console.log('in genrate trip promise return packignschema', packingSchema);
-                    
-                    initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
+        if (validateSlots.call(this)) {
+            generateTrip.call(this).then(packingSchema => {
+                ddb.insertTrip(userId, packingSchema)
+                    .then(data => {
+                        console.log('in genrate trip promise return packignschema', packingSchema);
 
-                    // console.log('data of dynamodb', data);
-                    this.emitWithState("NewSession");
-                }).catch(error => {
-                    // console.log('error of dynamodb', error);
-                });
-        });
+                        initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
+
+                        console.log('data of dynamodb', data);
+                        this.emitWithState("NewSession");
+                    }).catch(error => {
+                        console.log('error of dynamodb', error);
+                    });
+            });
+        }
     },
 
     'AMAZON.HelpIntent': function () {
@@ -140,6 +145,20 @@ function generateTrip() {
             }).catch(err => reject);
 
     });
+}
+
+function validateSlots() {
+    let fromCity = this.event.request.intent.slots.fromCity.value;
+    let toCity = this.event.request.intent.slots.toCity.value;
+    let duration = this.event.request.intent.slots.duration.value;
+    let date = this.event.request.intent.slots.date.value;
+    let purpose = this.event.request.intent.slots.purpose.value;
+
+    return fromCity != undefined &&
+        toCity != undefined &&
+        duration != undefined &&
+        date != undefined &&
+        purpose != undefined;
 }
 
 module.exports = newTripModeHandler;
