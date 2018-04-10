@@ -7,6 +7,7 @@ var constants = require("./constants")
 var newSessionHandler = require("./handlers/newSessionHandler");
 var newTripModeHandler = require("./handlers/newTripModeHandler");
 var packBagHandler = require("./handlers/packBagHandler");
+var categorySelectHandler = require("./handlers/categorySelectHandler");
 
 //setting environment variable
 var env = process.env.NODE_ENV || 'development';
@@ -29,11 +30,12 @@ exports.handler = function (event, context) {
         alexa.dynamoDBClient =new AWS.DynamoDB(config);  
     }
 
-    alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
+    // alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
     alexa.registerHandlers(
         newSessionHandler,
         newTripModeHandler,
-        packBagHandler
+        packBagHandler,
+        categorySelectHandler
     );
     alexa.execute();
 };

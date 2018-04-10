@@ -1,0 +1,100 @@
+{
+	"version": "1.0",
+	"session": {
+		"new": false,
+		"sessionId": "amzn1.echo-api.session.2d53ecbb-116d-4824-af56-e0eb038f2320",
+		"application": {
+			"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+		},
+		"attributes": {
+			"STATE": "_NEW_TRIP"
+		},
+		"user": {
+			"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+		}
+	},
+	"context": {
+		"AudioPlayer": {
+			"playerActivity": "IDLE"
+		},
+		"Display": {
+			"token": ""
+		},
+		"System": {
+			"application": {
+				"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+			},
+			"user": {
+				"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+			},
+			"device": {
+				"deviceId": "amzn1.ask.device.AE4EV6AR3RR7CQJXKQJPK64WMGOOFRV5LXABTUIHFFQG3TRFB7POAREZ3XEOPZPIDOQ7LUZOZXSKPL4I6YYVYZZSJECHUNYSNI5NDSBKCZK5NCBUJTQCIIWRZMRZHQQ5D5LFNMI25S7VE4UCRUU45FUE5ZHA",
+				"supportedInterfaces": {
+					"AudioPlayer": {},
+					"Display": {
+						"templateVersion": "1.0",
+						"markupVersion": "1.0"
+					}
+				}
+			},
+			"apiEndpoint": "https://api.eu.amazonalexa.com",
+			"apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmQ4YWI0NDI2LTY2Y2EtNGRmZC1iZDBkLTdmMmMwMjQxOTQxMyIsImV4cCI6MTUyMzM4Njk0MiwiaWF0IjoxNTIzMzgzMzQyLCJuYmYiOjE1MjMzODMzNDIsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUU0RVY2QVIzUlI3Q1FKWEtRSlBLNjRXTUdPT0ZSVjVMWEFCVFVJSEZGUUczVFJGQjdQT0FSRVozWEVPUFpQSURPUTdMVVpPWlhTS1BMNEk2WVlWWVpaU0pFQ0hVTllTTkk1TkRTQktDWks1TkNCVUpUUUNJSVdSWk1SWkhRUTVENUxGTk1JMjVTN1ZFNFVDUlVVNDVGVUU1WkhBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUZBRTJHQVVSVEZHQVhEWEdTU1lFWFZTSkRYSFlZT05XSzRIS1dLRlc3NUhNSkM1Q1FNVktPMzNRUU9OR0xKUkVHUldKQ0hKV1FFNlpaQTdSSk9MTkVTSkpGUVlSR0dDUDc1UUw3QUJGRkJYQVFGWVBNRFFYWkkzR1ZBWERGNVcySk9NNlRXVlVGU1FRVVk1WTYzTU9SNFpRUU1QREZNVUlEVVBCTTVNV1NNNFBYQUhQVko0Sk1SQjRNWlZDRks2SkRRVTNWQUxMQ0RNSkVZIn19.ezqukfXtj379yg1MxU3_AUN9Zg91zAKggetmeHcxKwGRWT0ff813QP5oI_54emR_8P2EQC1V4YXKFmiYJ6q1IzHcvAr9vC1R6mGn9edhlEfqt97-AHqjez6dnsXlKrRAtZpTiz2UtJzGfFmc5octoS0-3M5yGUWDBQ83g3gD0y9RP7NAHuUz6PXfPnjUW4YvN8R1xIfLXakrxEls1xeiNKbtxP6X1iGE1zPFeCZlOfKI_ZGEp14B6YE0vg_aWAjLx21uQld9zqEm3Fl9S2-kA5zqjQpEaUsPwe-7xLTjOHrxs8PM6WMLETnT8Q6NGReHlAXmoUrWAAoNJP2o0gNUTg"
+		}
+	},
+	"request": {
+		"type": "IntentRequest",
+		"requestId": "amzn1.echo-api.request.843733d9-6513-45b6-8c38-b09e6ba1aa1f",
+		"timestamp": "2018-04-10T18:02:22Z",
+		"locale": "en-GB",
+		"intent": {
+			"name": "NewTripIntent",
+			"confirmationStatus": "NONE",
+			"slots": {
+				"duration": {
+					"name": "duration",
+					"value": "3",
+					"confirmationStatus": "NONE"
+				},
+				"date": {
+					"name": "date",
+					"value": "2018-04-11",
+					"confirmationStatus": "NONE"
+				},
+				"toCity": {
+					"name": "toCity",
+					"value": "Nevada",
+					"confirmationStatus": "NONE"
+				},
+				"purpose": {
+					"name": "purpose",
+					"value": "business",
+					"resolutions": {
+						"resolutionsPerAuthority": [
+							{
+								"authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413.purposeType",
+								"status": {
+									"code": "ER_SUCCESS_MATCH"
+								},
+								"values": [
+									{
+										"value": {
+											"name": "business",
+											"id": "f5d7e2532cc9ad16bc2a41222d76f269"
+										}
+									}
+								]
+							}
+						]
+					},
+					"confirmationStatus": "NONE"
+				},
+				"fromCity": {
+					"name": "fromCity",
+					"value": "Chicago",
+					"confirmationStatus": "NONE"
+				}
+			}
+		},
+		"dialogState": "IN_PROGRESS"
+	}
+}

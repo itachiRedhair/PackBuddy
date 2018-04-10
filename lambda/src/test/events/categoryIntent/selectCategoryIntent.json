@@ -1,0 +1,211 @@
+{
+	"version": "1.0",
+	"session": {
+		"new": false,
+		"sessionId": "amzn1.echo-api.session.7b34e65f-0e9f-4f84-8616-c0f5d80d6399",
+		"application": {
+			"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+		},
+		"attributes": {
+			"_CURRENT_PACKING_ITEM_KEY": "null",
+			"_CURRENT_CATEGORY_PACKING_STATUS": "_NOT_STARTED",
+			"_CURRENT_TRIP": "NewYork_Chicago_1523404800",
+			"_CURRENT_PACKING_CATEGORY_KEY": "null",
+			"_CURRENT_PACKING_LIST": {
+				"toiletries": {
+					"name": "toiletries",
+					"items": {
+						"deodorant": {
+							"name": "deodorant",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"flosss": {
+							"name": "flosss",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"hairbrush": {
+							"name": "hairbrush",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"toothbrush": {
+							"name": "toothbrush",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"toothpaste": {
+							"name": "toothpaste",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						}
+					},
+					"all_packed": false
+				},
+				"clothing": {
+					"name": "clothing",
+					"items": {
+						"shirt": {
+							"name": "shirt",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"jeans": {
+							"name": "jeans",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"regular clothes": {
+							"name": "regular clothes",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"sweater": {
+							"name": "sweater",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"blanket": {
+							"name": "blanket",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"jacket": {
+							"name": "jacket",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						}
+					},
+					"all_packed": false
+				},
+				"electronics": {
+					"name": "electronics",
+					"items": {
+						"phone charger": {
+							"name": "phone charger",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"phone": {
+							"name": "phone",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"laptop": {
+							"name": "laptop",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						},
+						"power bank": {
+							"name": "power bank",
+							"status": "_NOT_PACKED",
+							"meta_info": {},
+							"packed_on": "null",
+							"preferred_baggage": "cabin"
+						}
+					},
+					"all_packed": false
+				}
+			},
+			"STATE": "_CATEGORY_SELECT",
+			"_CURRENT_TOTAL_PACKING_STATUS": "_NOT_STARTED",
+			"_CURRENT_PACKING_ITEM": "null"
+		},
+		"user": {
+			"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+		}
+	},
+	"context": {
+		"AudioPlayer": {
+			"playerActivity": "IDLE"
+		},
+		"Display": {
+			"token": ""
+		},
+		"System": {
+			"application": {
+				"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
+			},
+			"user": {
+				"userId": "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY"
+			},
+			"device": {
+				"deviceId": "amzn1.ask.device.AE4EV6AR3RR7CQJXKQJPK64WMGOOFRV5LXABTUIHFFQG3TRFB7POAREZ3XEOPZPIDOQ7LUZOZXSKPL4I6YYVYZZSJECHUNYSNI5NDSBKCZK5NCBUJTQCIIWRZMRZHQQ5D5LFNMI25S7VE4UCRUU45FUE5ZHA",
+				"supportedInterfaces": {
+					"AudioPlayer": {},
+					"Display": {
+						"templateVersion": "1.0",
+						"markupVersion": "1.0"
+					}
+				}
+			},
+			"apiEndpoint": "https://api.eu.amazonalexa.com",
+			"apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmQ4YWI0NDI2LTY2Y2EtNGRmZC1iZDBkLTdmMmMwMjQxOTQxMyIsImV4cCI6MTUyMzM4NTQ2MSwiaWF0IjoxNTIzMzgxODYxLCJuYmYiOjE1MjMzODE4NjEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUU0RVY2QVIzUlI3Q1FKWEtRSlBLNjRXTUdPT0ZSVjVMWEFCVFVJSEZGUUczVFJGQjdQT0FSRVozWEVPUFpQSURPUTdMVVpPWlhTS1BMNEk2WVlWWVpaU0pFQ0hVTllTTkk1TkRTQktDWks1TkNCVUpUUUNJSVdSWk1SWkhRUTVENUxGTk1JMjVTN1ZFNFVDUlVVNDVGVUU1WkhBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUZBRTJHQVVSVEZHQVhEWEdTU1lFWFZTSkRYSFlZT05XSzRIS1dLRlc3NUhNSkM1Q1FNVktPMzNRUU9OR0xKUkVHUldKQ0hKV1FFNlpaQTdSSk9MTkVTSkpGUVlSR0dDUDc1UUw3QUJGRkJYQVFGWVBNRFFYWkkzR1ZBWERGNVcySk9NNlRXVlVGU1FRVVk1WTYzTU9SNFpRUU1QREZNVUlEVVBCTTVNV1NNNFBYQUhQVko0Sk1SQjRNWlZDRks2SkRRVTNWQUxMQ0RNSkVZIn19.QrfRerCOIn4z2dChnZTWul_mLHT2Sis4wd5MlQchbJH7Y6UZslLLbsZOdLD0poU-8eFsyqQ7LSNLM2p-8qw2xeXi0SFSEYLOwL_1TfJYJc6eJy3GZIHrtbMcEHuSNKDD-v-pX2nxneHXt3VzOaGIwQo4P0nKuhV49pj2x-Bk9fopoIZX_ZuofvyUMWzilWSSv98_nmKsO9iS-Ud7T_Lru26zhRTYYvNX9aJxhRxlm6LAja9WEOpI5uQO5EIoQK3EbMgIvUybbz1xS2PM3Uw6DoqZj81c7DBV0-iJ4aezSNsqv6N6Y1o008vJ8o4jfHWYESkq4jMZQT0-qw2rmNDsQg"
+		}
+	},
+	"request": {
+		"type": "IntentRequest",
+		"requestId": "amzn1.echo-api.request.77d09cad-ee74-48bb-abf0-548227e6334f",
+		"timestamp": "2018-04-10T17:37:41Z",
+		"locale": "en-GB",
+		"intent": {
+			"name": "SelectCategoryIntent",
+			"confirmationStatus": "NONE",
+			"slots": {
+				"selectedCategory": {
+					"name": "selectedCategory",
+					"value": "electronics",
+					"resolutions": {
+						"resolutionsPerAuthority": [
+							{
+								"authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413.packingCategory",
+								"status": {
+									"code": "ER_SUCCESS_MATCH"
+								},
+								"values": [
+									{
+										"value": {
+											"name": "electronics",
+											"id": "9ca91fd2ee5f4b463d11404b9c84803c"
+										}
+									}
+								]
+							}
+						]
+					},
+					"confirmationStatus": "NONE"
+				}
+			}
+		},
+		"dialogState": "STARTED"
+	}
+}

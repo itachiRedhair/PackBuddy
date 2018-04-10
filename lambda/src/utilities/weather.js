@@ -14,13 +14,12 @@ function getWeatherData(city, date, duration) {
                 .then(res => res.json())
                 .then(body => {
                     let weatherData = body.daily.data[0];
-                    // console.log(weatherData);
+                    console.log(weatherData);
                     resolve(weatherData);
                 }).catch(err => {
                     // console.log('error while fetching weather', err);
                     reject(err);
                 });
-
         })
     })
 }

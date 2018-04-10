@@ -33,11 +33,11 @@ const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
             generateTrip.call(this).then(packingSchema => {
                 ddb.insertTrip(userId, packingSchema)
                     .then(data => {
-                        console.log('in genrate trip promise return packignschema', packingSchema);
+                        // console.log('in genrate trip promise return packignschema', packingSchema);
 
                         initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
 
-                        console.log('data of dynamodb', data);
+                        // console.log('data of dynamodb', data);
                         this.emitWithState("NewSession");
                     }).catch(error => {
                         console.log('error of dynamodb', error);
@@ -140,7 +140,7 @@ function generateTrip() {
                 }
                 tripSchema.packing_list = list;
                 tripSchema.total_item_count = count;
-
+                // console.log(tripSchema.packing_list)
                 resolve(tripSchema);
             }).catch(err => reject);
 

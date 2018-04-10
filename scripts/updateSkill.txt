@@ -1,0 +1,24 @@
+ask api get-model --skill-id "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413" --stage development -l en-GB -p adminuser > models/en-GB.json
+
+ask api get-skill --skill-id "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413" --stage development -p adminuser > skill.json
+
+
+
+
+var params = {
+    TableName: 'tripDataTable',
+    Key: { // a map of attribute name to AttributeValue for all primary key attributes
+    
+        userId: "amzn1.ask.account.AFAE2GAURTFGAXDXGSSYEXVSJDXHYYONWK4HKWKFW75HMJC5CQMVKO33QQONGLJREGRWJCHJWQE6ZZA7RJOLNESJJFQYRGGCP75QL7ABFFBXAQFYPMDQXZI3GVAXDF5W2JOM6TWVUFSQQUY5Y63MOR4ZQQMPDFMUIDUPBM5MWSM4PXAHPVJ4JMRB4MZVCFK6JDQU3VALLCDMJEY", //(string | number | boolean | null | Binary)
+        // more attributes...
+
+    }
+};
+docClient.get(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});
+
+
+
+
