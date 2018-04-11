@@ -47,8 +47,8 @@ describe("Testing packBagIntent when user reply with yes for packing to start", 
         })
 
         it("should not end the alexa session", function() {
-            expect(speechResponse.response.shouldEndSession).not.to.be.null
-            expect(speechResponse.response.shouldEndSession).to.be.false
+            expect(speechResponse.response.shouldEndSession).not.to.be.null;
+            expect(speechResponse.response.shouldEndSession).to.be.false;
         })
     })
 })
