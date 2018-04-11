@@ -50,10 +50,10 @@ function setPackingSession(tripId, packingList) {
     // console.log('in setpackingsession current_packing_list', this.attributes[session.CURRENT_PACKING_LIST]);
 }
 
-function getNotPackedCategories(){
-    let packingList=this.attributes[session.CURRENT_PACKING_LIST];
-    let categories=[];
-    for(var categoryKey in packingList){
+function getNotPackedCategories() {
+    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    let categories = [];
+    for (var categoryKey in packingList) {
 
         // let allPacked=true;
         // for(var itemKey in packingList[categoryKey].items){
@@ -65,44 +65,49 @@ function getNotPackedCategories(){
         //     }
         // }
 
-        let allPacked=packingList[categoryKey]['all_packed'];
-        
-        if(!allPacked){
-            categories.push(categoryKey)
+        let allPacked = packingList[categoryKey]['all_packed'];
+
+        if (!allPacked) {
+            categories.push(categoryKey);
         }
     }
-    return categories
+    return categories;
 }
 
-function getRemindMeStatus(){
-    let packingList=this.attributes[session.CURRENT_PACKING_LIST];
+function getRemindMeStatus() {
+    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
 
-    for(var categoryKey in packingList){
+    for (var categoryKey in packingList) {
 
-        for(var itemKey in packingList[categoryKey].items){
+        // for (var itemKey in packingList[categoryKey].items) {
 
-            let item=packingList[categoryKey].items[itemKey]
-            if(item.status===packingItemStatus.REMIND_LATER){
-                return true;
-            }
+        //     let item = packingList[categoryKey].items[itemKey]
+        //     if (item.status === packingItemStatus.REMIND_LATER) {
+        //         return true;
+        //     }
+        // }
+        let remindMeLaterStatus = packingList[categoryKey]['remind_later']
+        if (remindMeLaterStatus) {
+            return true;
         }
     }
     return false;
 }
 
-function resetRemindMePackingList(){
-    let packingList=this.attributes[session.CURRENT_PACKING_LIST];
+function resetRemindMePackingList() {
+    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
 
-    for(var categoryKey in packingList){
+    for (var categoryKey in packingList) {
 
-        for(var itemKey in packingList[categoryKey].items){
+        for (var itemKey in packingList[categoryKey].items) {
 
-            let item=packingList[categoryKey].items[itemKey]
-            if(item.status===packingItemStatus.REMIND_LATER){
-                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['items'][itemKey]['status']=packingItemStatus.NOT_PACKED;
-                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['all_packed']=false;
+            let item = packingList[categoryKey].items[itemKey]
+            if (item.status === packingItemStatus.REMIND_LATER) {
+                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['items'][itemKey]['status'] = packingItemStatus.NOT_PACKED;
+                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['all_packed'] = false;
             }
         }
+        this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['remind_later'] = false;
     }
 }
 

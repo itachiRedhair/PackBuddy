@@ -30,7 +30,7 @@ exports.handler = function (event, context) {
         alexa.dynamoDBClient =new AWS.DynamoDB(config);  
     }
 
-    // alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
+    alexa.dynamoDBTableName = constants.sessionTable; // Dafuq really? That's it?
     alexa.registerHandlers(
         newSessionHandler,
         newTripModeHandler,

@@ -2,15 +2,14 @@
 	"version": "1.0",
 	"session": {
 		"new": false,
-		"sessionId": "amzn1.echo-api.session.8a69dd58-7e71-403e-b670-e95ce48ef280",
+		"sessionId": "amzn1.echo-api.session.69a5853b-a305-4426-95ab-2d79886ed073",
 		"application": {
 			"applicationId": "amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413"
 		},
 		"attributes": {
 			"_CURRENT_PACKING_ITEM_KEY": "null",
 			"_CURRENT_CATEGORY_PACKING_STATUS": "_NOT_STARTED",
-			"_CURRENT_PACKING_STATUS": "_NOT_STARTED",
-			"_CURRENT_TRIP": "Chicago_NewYork_1523404800",
+			"_CURRENT_TRIP": "NewYork_Chicago_1523491200",
 			"_CURRENT_PACKING_CATEGORY_KEY": "null",
 			"_CURRENT_PACKING_LIST": {
 				"toiletries": {
@@ -52,7 +51,8 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": false,
+					"remind_later": false
 				},
 				"clothing": {
 					"name": "clothing",
@@ -100,7 +100,8 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": false,
+					"remind_later": false
 				},
 				"electronics": {
 					"name": "electronics",
@@ -134,7 +135,8 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": false,
+					"remind_later": false
 				}
 			},
 			"_CURRENT_TOTAL_PACKING_STATUS": "_NOT_STARTED",
@@ -170,13 +172,13 @@
 				}
 			},
 			"apiEndpoint": "https://api.eu.amazonalexa.com",
-			"apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmQ4YWI0NDI2LTY2Y2EtNGRmZC1iZDBkLTdmMmMwMjQxOTQxMyIsImV4cCI6MTUyMzM4NDE0MSwiaWF0IjoxNTIzMzgwNTQxLCJuYmYiOjE1MjMzODA1NDEsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUU0RVY2QVIzUlI3Q1FKWEtRSlBLNjRXTUdPT0ZSVjVMWEFCVFVJSEZGUUczVFJGQjdQT0FSRVozWEVPUFpQSURPUTdMVVpPWlhTS1BMNEk2WVlWWVpaU0pFQ0hVTllTTkk1TkRTQktDWks1TkNCVUpUUUNJSVdSWk1SWkhRUTVENUxGTk1JMjVTN1ZFNFVDUlVVNDVGVUU1WkhBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUZBRTJHQVVSVEZHQVhEWEdTU1lFWFZTSkRYSFlZT05XSzRIS1dLRlc3NUhNSkM1Q1FNVktPMzNRUU9OR0xKUkVHUldKQ0hKV1FFNlpaQTdSSk9MTkVTSkpGUVlSR0dDUDc1UUw3QUJGRkJYQVFGWVBNRFFYWkkzR1ZBWERGNVcySk9NNlRXVlVGU1FRVVk1WTYzTU9SNFpRUU1QREZNVUlEVVBCTTVNV1NNNFBYQUhQVko0Sk1SQjRNWlZDRks2SkRRVTNWQUxMQ0RNSkVZIn19.jvm9waQZdf07KHpEyl9iDTo9vvxrUlFsnnRIvOwX_DGqhAgPlnMFGcIVxUYCBy4twIq7hNxC9asCUYAPk2KHZw51WKtE72z0SlhYjz0-GfyBBVxqxCyK8qLjgV__AAU6PyxZGzqYS2Fuqn9_EuAoJwmGj9_biPGRWaXiynVKJgPJZxlcxAdUfhzFMwAc2PQivTh24XJMMovc1924zGXcQcx2CMDfz0lRFjLerpPRE1dT877H5-NqrWuOlGRB2ckPFJ7EegUuM3QI3sQX6KFysFb9aODkIJiCRHu9Uj2POMklh_hV2m9IMnZTy8EBi0Q5Ybqz3OFZiOQvZ9YR4eQe8A"
+			"apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmQ4YWI0NDI2LTY2Y2EtNGRmZC1iZDBkLTdmMmMwMjQxOTQxMyIsImV4cCI6MTUyMzQ1Mzk4NywiaWF0IjoxNTIzNDUwMzg3LCJuYmYiOjE1MjM0NTAzODcsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUU0RVY2QVIzUlI3Q1FKWEtRSlBLNjRXTUdPT0ZSVjVMWEFCVFVJSEZGUUczVFJGQjdQT0FSRVozWEVPUFpQSURPUTdMVVpPWlhTS1BMNEk2WVlWWVpaU0pFQ0hVTllTTkk1TkRTQktDWks1TkNCVUpUUUNJSVdSWk1SWkhRUTVENUxGTk1JMjVTN1ZFNFVDUlVVNDVGVUU1WkhBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUZBRTJHQVVSVEZHQVhEWEdTU1lFWFZTSkRYSFlZT05XSzRIS1dLRlc3NUhNSkM1Q1FNVktPMzNRUU9OR0xKUkVHUldKQ0hKV1FFNlpaQTdSSk9MTkVTSkpGUVlSR0dDUDc1UUw3QUJGRkJYQVFGWVBNRFFYWkkzR1ZBWERGNVcySk9NNlRXVlVGU1FRVVk1WTYzTU9SNFpRUU1QREZNVUlEVVBCTTVNV1NNNFBYQUhQVko0Sk1SQjRNWlZDRks2SkRRVTNWQUxMQ0RNSkVZIn19.Qzu2Pj-W8Khn9pWWJoWpwgU1qN33oLfMOqwNQbbP-gLNCYS3DnPz4OlcCBDYzz0rQ1WYLDK6wnY7uyZjEVE2OEyNqA5ySk1EwjTUardOkES88CaVppQQz2adZhdI2risggdrt-NOuxiiQaJjuS_q6KLGgmpCrKTSe3R6n1NqaJpKaRsmqPU8KcOJLGo05K78Ez4q7Z67aSjF8DstC8A7lDC5wcy3A6Bz-WrE5NPbSaZCfvNJtXRen2dMODtvh3pdIV3-dx_SYVFo6n-ljUJ9vk9W2Lf7yNeOyxQ08IFGSCJebEwvTdIYiYqQZMczokwnwh-W9D7RJXlz5hjFXbz55Q"
 		}
 	},
 	"request": {
 		"type": "IntentRequest",
-		"requestId": "amzn1.echo-api.request.bacfe4a3-3a3c-44d1-b27b-6c1ea999f126",
-		"timestamp": "2018-04-10T17:15:41Z",
+		"requestId": "amzn1.echo-api.request.7b47b852-adee-4253-9db1-109374a283f2",
+		"timestamp": "2018-04-11T12:39:47Z",
 		"locale": "en-GB",
 		"intent": {
 			"name": "AMAZON.YesIntent",

@@ -3,9 +3,9 @@
 var Alexa = require("alexa-sdk");
 var ddb = require('./../utilities/ddbController');
 
-const getNotPackedCategories=require("./../utilities/packingListController").getNotPackedCategories;
-const getRemindMeStatus=require("./../utilities/packingListController").getRemindMeStatus;
-const resetRemindMePackingList=require("./../utilities/packingListController").resetRemindMePackingList;
+const getNotPackedCategories = require("./../utilities/packingListController").getNotPackedCategories;
+const getRemindMeStatus = require("./../utilities/packingListController").getRemindMeStatus;
+const resetRemindMePackingList = require("./../utilities/packingListController").resetRemindMePackingList;
 
 //constants
 const states = require("./../constants").states;
@@ -19,69 +19,71 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
         this.emitWithState("ListCategoryIntent");
     },
 
-    'ListInvokeIntent':function(){
-        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.NOT_STARTED;
+    'ListInvokeIntent': function () {
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.NOT_STARTED;
         this.emitWithState("ListCategoryIntent");
     },
 
-    'ListCategoryIntent': function(){
+    'ListCategoryIntent': function () {
         //get list from getPackingCategories() method in packinglistcontroller
-         let categories=getNotPackedCategories.call(this);
+        let categories = getNotPackedCategories.call(this);
 
-         let message='';
-        console.log('in list category intent',categories)
-        if(categories.length){
-            let packingList=this.attributes[session.CURRENT_PACKING_LIST];
-            let totalPackingStatus=this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
+        let message = '';
+        console.log('in list category intent', categories)
+        if (categories.length) {
+            let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+            let totalPackingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
 
             message = "What do you want to pack";
-            let reprompt= "You can try give me list"
+            let reprompt = "You can try give me list"
 
-            if(totalPackingStatus === packingStatus.NOT_STARTED){
-                message+="? "
+            if (totalPackingStatus === packingStatus.NOT_STARTED) {
+                message += "? "
                 categories.forEach(category => {
-                    message += packingList[category].name+", ";
+                    message += packingList[category].name + ", ";
                 });
                 message += "Select one."
 
                 this.response.speak(message).listen(reprompt);
                 this.emit(":responseReady");
-            }else{
-                this.response.speak(message+ " now?").listen(reprompt);
+            } else {
+                this.response.speak(message + " now?").listen(reprompt);
                 this.emit(":responseReady");
             }
-        }else{
-            if(getRemindMeStatus.call(this)===true){
-                let message='There are some items you asked me to remind me. Do you want to pack them now?'
+        } else {
+            if (getRemindMeStatus.call(this) === true) {
+                console.log('get remind me status = true');
+                let message = 'There are some items you asked me to remind me. Do you want to pack them now?'
                 this.response.speak(message).listen(message);
                 this.emit(":responseReady");
-            }else{  
-                this.handler.state=states.PACKING;
+            } else {
+                console.log('get remind me status = false');
+                this.handler.state = states.PACKING;
                 this.emitWithState("PackingCompleteIntent");
             }
         }
     },
 
-    'AMAZON.YesIntent': function(){
+    'AMAZON.YesIntent': function () {
         resetRemindMePackingList.call(this);
-        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.NOT_STARTED;
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.NOT_STARTED;
         this.emitWithState("ListCategoryIntent");
     },
-    
-    'AMAZON.NoIntent': function(){
-        this.handler.state=states.PACKING;
+
+    'AMAZON.NoIntent': function () {
+        this.handler.state = states.PACKING;
         this.emitWithState("PackingCompleteIntent");
     },
 
-    'SelectCategoryIntent': function(){
+    'SelectCategoryIntent': function () {
         //get value in slot and emit pack Bag intent with current category session attribute
-        let selectedCategory=this.event.request.intent.slots.selectedCategory.resolutions.resolutionsPerAuthority[0].values[0].value.name;
-        let packingList=this.attributes[session.CURRENT_PACKING_LIST];
+        let selectedCategory = this.event.request.intent.slots.selectedCategory.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+        let packingList = this.attributes[session.CURRENT_PACKING_LIST];
         // this.response.speak("Let's start packing your " + packingList[selectedCategory].name);
-        this.attributes[session.CURRENT_PACKING_CATEGORY_KEY]=selectedCategory;
-        this.attributes[session.CURRENT_CATEGORY_PACKING_STATUS]=packingStatus.IN_PROGRESS;
-        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.IN_PROGRESS;
-        this.handler.state=states.PACKING;
+        this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = selectedCategory;
+        this.attributes[session.CURRENT_CATEGORY_PACKING_STATUS] = packingStatus.IN_PROGRESS;
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.IN_PROGRESS;
+        this.handler.state = states.PACKING;
         this.emitWithState("PackNewCategoryIntent");
     },
 
@@ -95,15 +97,17 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
 
     'AMAZON.StopIntent': function () {
         clearState.call(this);
-        ddb.updatePackingList.call(this);
-        this.response.speak("Good Bye");
-        this.emit(":responseReady");
+        ddb.updatePackingList.call(this).then(() => {
+            this.response.speak("Good Bye");
+            this.emit(":responseReady");
+        });
     },
 
     'SessionEndedRequest': function () {
         clearState.call(this);
-        ddb.updatePackingList.call(this);
-        this.emit(':saveState', true)
+        ddb.updatePackingList.call(this).then(() => {
+            this.emit(':saveState', true)
+        });
     },
 
     'Unhandled': function () {

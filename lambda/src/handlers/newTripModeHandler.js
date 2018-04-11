@@ -5,6 +5,7 @@ var tripSchema = require("./../assets/entrySchema");
 var fetchWeather = require("./../utilities/weather");
 var generatePackingList = require("./../utilities/packingListController").createPackingList;
 var initializePackingSession = require("./../utilities/packingListController").setPackingSession;
+var clearState = require("./../utilities/helper").clearState;
 
 //constants
 const states = require("./../constants").states;
@@ -32,11 +33,9 @@ const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
         if (validateSlots.call(this)) {
             generateTrip.call(this).then(packingSchema => {
                 ddb.insertTrip(userId, packingSchema)
-                    .then(data => {
+                    .then(() => {
                         // console.log('in genrate trip promise return packignschema', packingSchema);
-
                         initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
-
                         // console.log('data of dynamodb', data);
                         this.emitWithState("NewSession");
                     }).catch(error => {
@@ -105,11 +104,6 @@ function delegateSlotCollection() {
     }
 }
 
-function clearState() {
-    this.handler.state = '' // delete this.handler.state might cause reference errors
-    delete this.attributes['STATE'];
-}
-
 function generateTrip() {
     return new Promise((resolve, reject) => {
         let fromCity = this.event.request.intent.slots.fromCity.value;
@@ -121,14 +115,15 @@ function generateTrip() {
         fromCity = fromCity.split(" ").join("");
         toCity = toCity.split(" ").join("");
         date = new Date(date).getTime() / 1000;
+        let currentDate = new Date().getTime() / 1000;
 
         tripSchema.trip_info.from_city = fromCity;
         tripSchema.trip_info.to_city = toCity;
         tripSchema.trip_info.duration = duration;
         tripSchema.trip_info.date = date;
         tripSchema.trip_info.purpose = purpose;
-        tripSchema.trip_info.trip_name = fromCity + "_" + toCity + "_" + date;
-        tripSchema.trip_id = fromCity + "_" + toCity + "_" + date;
+        tripSchema.trip_info.trip_name = fromCity + "_" + toCity + "_" + date + "_" + currentDate;
+        tripSchema.trip_id = fromCity + "_" + toCity + "_" + date + "_" + currentDate;
         console.log('tripSchema', tripSchema);
 
         generatePackingList(toCity, date, duration)

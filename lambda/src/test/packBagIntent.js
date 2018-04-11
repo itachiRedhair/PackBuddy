@@ -43,7 +43,7 @@ describe("Testing packBagIntent when user reply with yes for packing to start", 
 
         it("should not end the alexa session", function() {
             // console.log('speechResponse in pack bagintent yes',speechResponse);
-            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> What do you want to pack ? toiletries, clothing, electronics, Select one. </speak>")
+            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> What do you want to pack? toiletries, clothing, electronics, Select one. </speak>")
         })
 
         it("should not end the alexa session", function() {
@@ -117,6 +117,7 @@ describe("Testing packing complete event", function () {
         })
 
         it("should have a correct value for response",function(){
+            console.log(speechResponse);
             expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Your packing is complete. Thank you! </speak>");
         })
 
