@@ -37,10 +37,11 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
                 // ddb.updatePackingList.call(this);
                 // this.response.speak("Your packing is completed. Have a nice journey. Feel free to call me again for packing. See Ya!");
                 // console.log('here in switch case completed in packitemintent');
-                this.attributes[session.CURRENT_PACKING_LIST][session.CURRENT_PACKING_CATEGORY_KEY]['all_packed']=true;
+                let categoryKey=this.attributes[session.CURRENT_PACKING_CATEGORY_KEY]
+                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['all_packed']=true;
                 this.handler.state = states.CATEGORY_SELECT;
                 this.emitWithState('ListCategoryIntent');
-                break;
+                break;  
             default:
                 this.response.speak("There is some problem. Sorry for inconvenience.");
         }
@@ -107,6 +108,18 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
 
     'RemindLaterIntent': function() {
 
+        switch (this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]) {
+            case packingStatus.IN_PROGRESS:
+                var currentPackingItemKey = this.attributes[session.CURRENT_PACKING_ITEM_KEY];
+                var currentPackingCategoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY];
+                this.attributes[session.CURRENT_PACKING_LIST][currentPackingCategoryKey]['items'][currentPackingItemKey]['status'] = packingItemStatus.REMIND_LATER;
+                this.emitWithState('PackItemIntent');
+                break;
+            default:
+                this.response.speak("Maybe try something else. like saying help me packing").listen("Maybe try something else. like saying help me packing");
+                this.emit(":responseReady");
+        }
+        
     },
 
     'AMAZON.StopIntent': function () {

@@ -4,6 +4,8 @@ var Alexa = require("alexa-sdk");
 var ddb = require('./../utilities/ddbController');
 
 const getNotPackedCategories=require("./../utilities/packingListController").getNotPackedCategories;
+const getRemindMeStatus=require("./../utilities/packingListController").getRemindMeStatus;
+const resetRemindMePackingList=require("./../utilities/packingListController").resetRemindMePackingList;
 
 //constants
 const states = require("./../constants").states;
@@ -17,36 +19,58 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
         this.emitWithState("ListCategoryIntent");
     },
 
+    'ListInvokeIntent':function(){
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.NOT_STARTED;
+        this.emitWithState("ListCategoryIntent");
+    },
+
     'ListCategoryIntent': function(){
         //get list from getPackingCategories() method in packinglistcontroller
          let categories=getNotPackedCategories.call(this);
 
          let message='';
-
+        console.log('in list category intent',categories)
         if(categories.length){
             let packingList=this.attributes[session.CURRENT_PACKING_LIST];
             let totalPackingStatus=this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
 
             message = "What do you want to pack";
+            let reprompt= "You can try give me list"
 
             if(totalPackingStatus === packingStatus.NOT_STARTED){
-                message+=" ? "
+                message+="? "
                 categories.forEach(category => {
                     message += packingList[category].name+", ";
                 });
                 message += "Select one."
 
-                this.response.speak(message).listen(message);
+                this.response.speak(message).listen(reprompt);
                 this.emit(":responseReady");
             }else{
-                this.response.speak(message+ " now?").listen(message);
+                this.response.speak(message+ " now?").listen(reprompt);
                 this.emit(":responseReady");
             }
         }else{
-            this.handler.state=states.PACKING;
-            console.log('here in categoryselecthandler, state=>',states.PACKING);
-            this.emitWithState("PackingCompleteIntent");
+            if(getRemindMeStatus.call(this)===true){
+                let message='There are some items you asked me to remind me. Do you want to pack them now?'
+                this.response.speak(message).listen(message);
+                this.emit(":responseReady");
+            }else{  
+                this.handler.state=states.PACKING;
+                this.emitWithState("PackingCompleteIntent");
+            }
         }
+    },
+
+    'AMAZON.YesIntent': function(){
+        resetRemindMePackingList.call(this);
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.NOT_STARTED;
+        this.emitWithState("ListCategoryIntent");
+    },
+    
+    'AMAZON.NoIntent': function(){
+        this.handler.state=states.PACKING;
+        this.emitWithState("PackingCompleteIntent");
     },
 
     'SelectCategoryIntent': function(){
@@ -83,7 +107,7 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
     },
 
     'Unhandled': function () {
-        const message = "you can say let's pack clothes";
+        const message = "You can say give me list and then proceed with the category";
         this.response.speak(message)
             .listen(message);
         this.emit(':responseReady');

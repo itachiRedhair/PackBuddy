@@ -55,15 +55,17 @@ function getNotPackedCategories(){
     let categories=[];
     for(var categoryKey in packingList){
 
-        let allPacked=true;
-        for(var itemKey in packingList[categoryKey].items){
+        // let allPacked=true;
+        // for(var itemKey in packingList[categoryKey].items){
 
-            let item=packingList[categoryKey].items[itemKey]
-            if(item.status===packingItemStatus.NOT_PACKED){
-                allPacked=false;
-                break;
-            }
-        }
+        //     let item=packingList[categoryKey].items[itemKey]
+        //     if(item.status===packingItemStatus.NOT_PACKED){
+        //         allPacked=false;
+        //         break;
+        //     }
+        // }
+
+        let allPacked=packingList[categoryKey]['all_packed'];
         
         if(!allPacked){
             categories.push(categoryKey)
@@ -72,4 +74,37 @@ function getNotPackedCategories(){
     return categories
 }
 
-module.exports = { createPackingList, setPackingSession, getNotPackedCategories };
+function getRemindMeStatus(){
+    let packingList=this.attributes[session.CURRENT_PACKING_LIST];
+
+    for(var categoryKey in packingList){
+
+        for(var itemKey in packingList[categoryKey].items){
+
+            let item=packingList[categoryKey].items[itemKey]
+            if(item.status===packingItemStatus.REMIND_LATER){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function resetRemindMePackingList(){
+    let packingList=this.attributes[session.CURRENT_PACKING_LIST];
+
+    for(var categoryKey in packingList){
+
+        for(var itemKey in packingList[categoryKey].items){
+
+            let item=packingList[categoryKey].items[itemKey]
+            if(item.status===packingItemStatus.REMIND_LATER){
+                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['items'][itemKey]['status']=packingItemStatus.NOT_PACKED;
+                this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['all_packed']=false;
+            }
+        }
+    }
+}
+
+
+module.exports = { createPackingList, setPackingSession, getNotPackedCategories, getRemindMeStatus, resetRemindMePackingList };

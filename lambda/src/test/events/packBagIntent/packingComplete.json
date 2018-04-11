@@ -51,7 +51,7 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": true
 				},
 				"clothing": {
 					"name": "clothing",
@@ -99,7 +99,7 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": true
 				},
 				"electronics": {
 					"name": "electronics",
@@ -133,7 +133,7 @@
 							"preferred_baggage": "cabin"
 						}
 					},
-					"all_packed": false
+					"all_packed": true
 				}
 			},
 			"STATE": "_PACKING",

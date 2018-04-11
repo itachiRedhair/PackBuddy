@@ -26,7 +26,8 @@ module.exports = Object.freeze({
     packingItemStatus: {
         PACKED: "_PACKED",
         NOT_PACKED: "_NOT_PACKED",
-        NOT_INTERESTED: "_NOT_INTERESTED"
+        NOT_INTERESTED: "_NOT_INTERESTED",
+        REMIND_LATER: "_REMIND_LATER"
     },
     
     session: {
