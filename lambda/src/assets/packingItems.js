@@ -38,7 +38,8 @@ var packingItemsFixed = {
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         }},
-        all_packed:false
+        all_packed:false,
+        remind_later:false
     },
     clothing: {
         name:'clothing',
@@ -63,7 +64,8 @@ var packingItemsFixed = {
             'packed_on': 'null',
             'preferred_baggage': 'cabin'
         }},
-        all_packed:false
+        all_packed:false,
+        remind_later:false
     },
     electronics: {
         name:"electronics",
@@ -96,7 +98,8 @@ var packingItemsFixed = {
             'preferred_baggage': 'cabin'
         }
     },
-    all_packed:false
+    all_packed:false,
+    remind_later:false
     }
 }
 

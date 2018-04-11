@@ -36,9 +36,10 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
                 // clearState.call(this);
                 // ddb.updatePackingList.call(this);
                 // this.response.speak("Your packing is completed. Have a nice journey. Feel free to call me again for packing. See Ya!");
-                console.log('here in switch case completed in packitemintent');
+                // console.log('here in switch case completed in packitemintent');
+                this.attributes[session.CURRENT_PACKING_LIST][session.CURRENT_PACKING_CATEGORY_KEY]['all_packed']=true;
                 this.handler.state = states.CATEGORY_SELECT;
-                this.emitWithState('NewSession');
+                this.emitWithState('ListCategoryIntent');
                 break;
             default:
                 this.response.speak("There is some problem. Sorry for inconvenience.");
@@ -54,6 +55,7 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
     'PackingCompleteIntent': function(){
         clearState.call(this);
         this.response.speak("Your packing is complete. Thank you!");
+        this.emit(":responseReady");
     },
 
     'AMAZON.HelpIntent': function () {

@@ -44,15 +44,14 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
             }
         }else{
             this.handler.state=states.PACKING;
-            this.emit("PackingCompleteIntent");
+            console.log('here in categoryselecthandler, state=>',states.PACKING);
+            this.emitWithState("PackingCompleteIntent");
         }
-
-
     },
 
     'SelectCategoryIntent': function(){
         //get value in slot and emit pack Bag intent with current category session attribute
-        let selectedCategory=this.event.request.intent.slots.selectedCategory.value;
+        let selectedCategory=this.event.request.intent.slots.selectedCategory.resolutions.resolutionsPerAuthority[0].values[0].value.name;
         let packingList=this.attributes[session.CURRENT_PACKING_LIST];
         // this.response.speak("Let's start packing your " + packingList[selectedCategory].name);
         this.attributes[session.CURRENT_PACKING_CATEGORY_KEY]=selectedCategory;
@@ -70,14 +69,6 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
         this.emit(':responseReady');
     },
 
-    'AMAZON.YesIntent': function () {
-
-    },
-
-    'AMAZON.NoIntent': function () {
-
-    },
-
     'AMAZON.StopIntent': function () {
         clearState.call(this);
         ddb.updatePackingList.call(this);
@@ -92,7 +83,7 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
     },
 
     'Unhandled': function () {
-        const message = "let's pack clothes";
+        const message = "you can say let's pack clothes";
         this.response.speak(message)
             .listen(message);
         this.emit(':responseReady');
