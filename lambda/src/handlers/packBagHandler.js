@@ -105,6 +105,10 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
         }
     },
 
+    'RemindLaterIntent': function() {
+
+    },
+
     'AMAZON.StopIntent': function () {
         clearState.call(this);
         ddb.updatePackingList.call(this);
