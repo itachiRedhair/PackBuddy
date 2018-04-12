@@ -117,7 +117,7 @@ describe("Testing packing complete event", function () {
         })
 
         it("should have a correct value for response",function(){
-            console.log(speechResponse);
+            // console.log(speechResponse);
             expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Your packing is complete. Thank you! </speak>");
         })
 

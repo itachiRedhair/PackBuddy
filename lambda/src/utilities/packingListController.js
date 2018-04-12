@@ -20,7 +20,7 @@ function createPackingList(destination, date, duration) {
                 // console.log(JSON.stringify(fixedList, null, 4));
                 resolve(fixedList);
             }).catch(err => {
-                // console.log('Error', err);
+                console.log('Error', err);
                 reject(err);
             })
 

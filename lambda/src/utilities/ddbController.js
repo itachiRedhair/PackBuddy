@@ -107,6 +107,7 @@ function updatePackingList() {
     let userId = this.event.session.user.userId;
     let tripId = this.attributes[session.CURRENT_TRIP];
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    console.log('inisde ddb update packing list', userId, tripId);
     return new Promise((resolve, reject) => {
         // console.log('here in dynamodb with userId ', userId)
         var params = {
@@ -120,21 +121,20 @@ function updatePackingList() {
             },
             ExpressionAttributeNames: {
                 "#ti": tripId
-            },
+            }
         };
 
-        initializeDynamoDB(userId).then(() => {
-            documentClient.update(params, (err, data) => {
-                if (err) {
-                    // console.log("Error when calling DynamoDB");
-                    // console.log(err, err.stack); // an error occurred
-                    reject(err);
-                } else {
-                    // console.log(data); // successful response
-                    resolve();
-                }
-            });
-        })
+        // initializeDynamoDB(userId).then(() => {
+        documentClient.update(params, (err, data) => {
+            if (err) {
+                console.log("Error while updating dynamodb in updatePackingList(), err=>", err);
+                reject(err);
+            } else {
+                // console.log(data); // successful response
+                resolve();
+            }
+        });
+        // })
     });
 }
 
@@ -173,8 +173,8 @@ function initializeDynamoDB(userId) {
         // })
         // } else {
         checkIfTableDataExist(userId).then(data => {
-            // console.log('in checkIf table data exist call, data=>', data, JSON.stringify(data), Object.keys(data).length);
-            if (Object.keys(data).length == 0) {
+            console.log('in checkIf table data exist call, data=>', data, JSON.stringify(data), Object.keys(data).length);
+            if (Object.keys(data.Item).length < 2) {
                 initializeTableData(userId).then(data => {
                     console.log('table data initialized successfully');
                     resolve();
@@ -281,8 +281,9 @@ function checkIfTableDataExist(userId) {
                 userId: userId
             },
             AttributesToGet: [
-                'userId'
-            ],
+                'trip_list',
+                'last_trip_key'
+            ]
         };
         documentClient.get(params, function (err, data) {
             if (err) reject(err); // an error occurred

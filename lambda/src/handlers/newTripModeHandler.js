@@ -39,8 +39,10 @@ const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
                         // console.log('data of dynamodb', data);
                         this.emitWithState("NewSession");
                     }).catch(error => {
-                        console.log('error of dynamodb', error);
+                        console.log('error catched in dynamodb', error);
                     });
+            }).catch(err => {
+                console.log('error catched in genearate trip', err)
             });
         }
     },
@@ -122,9 +124,9 @@ function generateTrip() {
         tripSchema.trip_info.duration = duration;
         tripSchema.trip_info.date = date;
         tripSchema.trip_info.purpose = purpose;
-        tripSchema.trip_info.trip_name = fromCity + "_" + toCity + "_" + date + "_" + currentDate;
-        tripSchema.trip_id = fromCity + "_" + toCity + "_" + date + "_" + currentDate;
-        console.log('tripSchema', tripSchema);
+        tripSchema.trip_info.trip_name = fromCity + "_" + toCity + "_" + date;
+        tripSchema.trip_id = fromCity + "_" + toCity + "_" + date;
+        // console.log('tripSchema', tripSchema);
 
         generatePackingList(toCity, date, duration)
             .then(list => {
@@ -137,7 +139,7 @@ function generateTrip() {
                 tripSchema.total_item_count = count;
                 // console.log(tripSchema.packing_list)
                 resolve(tripSchema);
-            }).catch(err => reject);
+            }).catch(err => reject(err));
 
     });
 }
