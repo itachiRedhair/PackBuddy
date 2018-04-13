@@ -37,7 +37,7 @@ describe("Testing an invocation", function () {
         })
 
         it("should have correct spoken response",()=>{
-            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Hi I am Pack Buddy. Do you want help with packing? </speak>")
+            expect(speechResponse.response.outputSpeech.ssml).to.equal("<speak> Hi I am Pack Buddy. It seems you are not done with your last packing? Do you want to resume it or start with the new one? </speak>")
         })
 
         it("should not end the alexa session", function() {

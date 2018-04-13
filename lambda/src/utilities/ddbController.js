@@ -1,6 +1,8 @@
 'use strict';
 
 let AWS = require('aws-sdk');
+let getRemindMeStatus = require("./../utilities/packingListController").getRemindMeStatus;
+//import constants
 let constants = require('./../constants.js');
 let session = require('./../constants.js').session;
 
@@ -76,13 +78,13 @@ function insertTrip(userId, tripEntry) {
             Key: {
                 userId: userId
             },
-            UpdateExpression: "SET trip_list.#ti = :trip_info, last_trip_key = :last_trip_val",
+            UpdateExpression: "SET trip_list.#ti = :ti, last_trip_key = :ltv",
             ExpressionAttributeValues: {
-                ":trip_info": tripEntry,
-                ":last_trip_val": tripEntry['trip_id']
+                ":ti": tripEntry,
+                ":ltv": tripEntry.trip_id
             },
             ExpressionAttributeNames: {
-                "#ti": tripEntry["trip_id"]
+                "#ti": tripEntry.trip_id
             },
             // UpdateExpression: "SET trip_list.#ti = if_not_exists( trip_list.#ti, :trip_info), last_trip_key = if_not_exists( last_trip_key,:last_trip_val)"
         };
@@ -91,8 +93,10 @@ function insertTrip(userId, tripEntry) {
             console.log('here in initializedynamodb in insert trip');
             documentClient.update(params, (err, data) => {
                 if (err) {
+                    console.log(err);
                     reject(err);
                 } else {
+                    console.log('data inserted successfully');
                     resolve();
                 }
             });
@@ -107,6 +111,9 @@ function updatePackingList() {
     let userId = this.event.session.user.userId;
     let tripId = this.attributes[session.CURRENT_TRIP];
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    let packingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
+    let remindMeStatus = getRemindMeStatus.call(this);
+    console.log("inside update packng list, remindMeStatus=>", remindMeStatus)
     console.log('inisde ddb update packing list', userId, tripId);
     return new Promise((resolve, reject) => {
         // console.log('here in dynamodb with userId ', userId)
@@ -115,9 +122,11 @@ function updatePackingList() {
             Key: {
                 userId: userId
             },
-            UpdateExpression: "SET trip_list.#ti.packing_list = :pl",
+            UpdateExpression: "SET trip_list.#ti.packing_list = :pl, trip_list.#ti.remind_me = :rms, trip_list.#ti.packing_status = :ps",
             ExpressionAttributeValues: {
-                ":pl": packingList
+                ":pl": packingList,
+                ":rms": remindMeStatus,
+                ":ps": packingStatus
             },
             ExpressionAttributeNames: {
                 "#ti": tripId
@@ -130,7 +139,7 @@ function updatePackingList() {
                 console.log("Error while updating dynamodb in updatePackingList(), err=>", err);
                 reject(err);
             } else {
-                // console.log(data); // successful response
+                console.log('successful updating data', data); // successful response
                 resolve();
             }
         });
@@ -172,9 +181,10 @@ function initializeDynamoDB(userId) {
         //     reject(err);
         // })
         // } else {
-        checkIfTableDataExist(userId).then(data => {
+        getAllItemsData(userId).then(data => {
             console.log('in checkIf table data exist call, data=>', data, JSON.stringify(data), Object.keys(data).length);
-            if (Object.keys(data.Item).length < 2) {
+            // if (Object.keys(data.Item).length < 2) {
+            if (true) { //always override data
                 initializeTableData(userId).then(data => {
                     console.log('table data initialized successfully');
                     resolve();
@@ -272,9 +282,9 @@ function initializeTableData(userId) {
     });
 }
 
-function checkIfTableDataExist(userId) {
+function getAllItemsData(userId) {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb checkIf table data exist');
+        console.log('here in ddb getAllItemsData');
         var params = {
             TableName: constants.tripDataTable,
             Key: {
@@ -289,7 +299,7 @@ function checkIfTableDataExist(userId) {
             if (err) reject(err); // an error occurred
             else resolve(data); // successful response
         });
-    })
+    });
 }
 
-module.exports = { insertTrip, getFromDDB, updatePackingList, getLastTripID }
+module.exports = { insertTrip, getFromDDB, updatePackingList, getLastTripID, getAllItemsData }

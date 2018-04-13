@@ -58,6 +58,7 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
         console.log('in packing complete intent before then');
         ddb.updatePackingList.call(this).then(() => {
             console.log('in packing complete intent inside then');
+            this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.COMPLETED;
             this.response.speak("Your packing is complete. Thank you!");
             this.emit(":responseReady");
         }).catch(err => {
@@ -77,8 +78,7 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
     'AMAZON.YesIntent': function () {
 
         switch (this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]) {
-            case packingStatus.NOT_STARTED:
-                // this.attributes[session.CURRENT_PACKING_STATUS] === packingStatus.STARTED;
+            case packingStatus.STARTED:
                 this.handler.state = states.CATEGORY_SELECT;
                 this.emitWithState('NewSession');
                 break;
@@ -89,7 +89,8 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
                 this.emitWithState('PackItemIntent');
                 break;
             default:
-                this.response.speak("Maybe try something else. like saying help me packing");
+                let message = "Maybe try something else. like saying help me packing"
+                this.response.speak(message).listen(message);
                 this.emit(":responseReady");
         }
     },
@@ -97,7 +98,7 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
     'AMAZON.NoIntent': function () {
 
         switch (this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]) {
-            case packingStatus.NOT_STARTED:
+            case packingStatus.STARTED:
                 clearState.call(this);
                 ddb.updatePackingList.call(this)(() => {
                     this.response.speak('Ok, see you next time!');
@@ -119,6 +120,8 @@ const packBagHandler = Alexa.CreateStateHandler(states.PACKING, {
     'RemindLaterIntent': function () {
 
         switch (this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]) {
+            case packingStatus.STARTED:
+                this.emitWithState('Unhandled');
             case packingStatus.IN_PROGRESS:
                 var currentPackingItemKey = this.attributes[session.CURRENT_PACKING_ITEM_KEY];
                 var currentPackingCategoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY];

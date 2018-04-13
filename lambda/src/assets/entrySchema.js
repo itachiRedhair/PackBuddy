@@ -10,12 +10,13 @@ var trip = {
         duration: ''
     },
     packing_list: {},
-    packing_status: 'not_started',
+    packing_status: '_NOT_STARTED',
     last_packed: {
         item_name: '',
         category: ''
     },
-    total_item_count: 0,
-    packed_item_count: 0
+    // total_item_count: 0,
+    // packed_item_count: 0,
+    remind_me: false
 }
 module.exports = trip;

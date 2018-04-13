@@ -20,23 +20,17 @@ const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
 
     'NewTripIntent': function () {
         var filledSlots = delegateSlotCollection.call(this);
-        // speechOutput= " from " + fromCity + " to " + toCity + " on " + date + " for " + duration + " days " + " for " + purpose;
-
-        //say the results
-        // this.response.speak(speechOutput);
-        // this.emit(":responseReady");
-
-        this.handler.state = states.PACKING;
 
         var userId = this.event.session.user.userId;
 
         if (validateSlots.call(this)) {
-            generateTrip.call(this).then(packingSchema => {
-                ddb.insertTrip(userId, packingSchema)
+            generateTrip.call(this).then(tripDetails => {
+                ddb.insertTrip(userId, tripDetails)
                     .then(() => {
                         // console.log('in genrate trip promise return packignschema', packingSchema);
-                        initializePackingSession.call(this, packingSchema.trip_id, packingSchema.packing_list);
+                        initializePackingSession.call(this, tripDetails);
                         // console.log('data of dynamodb', data);
+                        this.handler.state = states.PACKING;
                         this.emitWithState("NewSession");
                     }).catch(error => {
                         console.log('error catched in dynamodb', error);
@@ -55,7 +49,7 @@ const newTripModeHandler = Alexa.CreateStateHandler(states.NEW_TRIP, {
     },
 
     'AMAZON.YesIntent': function () {
-        this.emitWithState('NewSession')
+        this.emitWithState('NewSession');
     },
 
     'AMAZON.NoIntent': function () {
@@ -136,7 +130,7 @@ function generateTrip() {
                     count += len;
                 }
                 tripSchema.packing_list = list;
-                tripSchema.total_item_count = count;
+                // tripSchema.total_item_count = count;
                 // console.log(tripSchema.packing_list)
                 resolve(tripSchema);
             }).catch(err => reject(err));

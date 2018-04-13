@@ -1,0 +1,38 @@
+{
+    "Items": [
+        {
+            "trip_list": {
+                "M": {
+                    "NewYork_Chicago_1520015400": {
+                        "M": {
+                            "trip_info": {
+                                "M": {
+                                    "date": {
+                                        "N": "1520015400"
+                                    },
+                                    "duration": {
+                                        "N": "3"
+                                    },
+                                    "to_city": {
+                                        "S": "Chicago"
+                                    },
+                                    "purpose": {
+                                        "S": "business"
+                                    },
+                                    "trip_name": {
+                                        "S": "NewYork_Chicago_1520015400"
+                                    },
+                                    "from_city": {
+                                        "S": "NewYork"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "Count": 1,
+    "ScannedCount": 1
+}

@@ -38,14 +38,14 @@ function getWeatherCondition(temperature) {
     else return 'rainy';
 }
 
-function setPackingSession(tripId, packingList) {
+function setPackingSession(trip) {
     // console.log('in setpackingsession packingList', packingList);
-    this.attributes[session.CURRENT_TRIP] = tripId;
-    this.attributes[session.CURRENT_PACKING_LIST] = packingList;
+    this.attributes[session.CURRENT_TRIP] = trip.trip_id;
+    this.attributes[session.CURRENT_PACKING_LIST] = trip.packing_list;
     this.attributes[session.CURRENT_PACKING_ITEM] = 'null';
     this.attributes[session.CURRENT_PACKING_ITEM_KEY] = 'null';
     this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
-    this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.NOT_STARTED;
+    this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
     this.attributes[session.CURRENT_CATEGORY_PACKING_STATUS] = packingStatus.NOT_STARTED;
     // console.log('in setpackingsession current_packing_list', this.attributes[session.CURRENT_PACKING_LIST]);
 }
@@ -53,24 +53,14 @@ function setPackingSession(tripId, packingList) {
 function getNotPackedCategories() {
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
     let categories = [];
+
     for (var categoryKey in packingList) {
-
-        // let allPacked=true;
-        // for(var itemKey in packingList[categoryKey].items){
-
-        //     let item=packingList[categoryKey].items[itemKey]
-        //     if(item.status===packingItemStatus.NOT_PACKED){
-        //         allPacked=false;
-        //         break;
-        //     }
-        // }
-
         let allPacked = packingList[categoryKey]['all_packed'];
-
         if (!allPacked) {
             categories.push(categoryKey);
         }
     }
+
     return categories;
 }
 
@@ -78,14 +68,6 @@ function getRemindMeStatus() {
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
 
     for (var categoryKey in packingList) {
-
-        // for (var itemKey in packingList[categoryKey].items) {
-
-        //     let item = packingList[categoryKey].items[itemKey]
-        //     if (item.status === packingItemStatus.REMIND_LATER) {
-        //         return true;
-        //     }
-        // }
         let remindMeLaterStatus = packingList[categoryKey]['remind_later']
         if (remindMeLaterStatus) {
             return true;

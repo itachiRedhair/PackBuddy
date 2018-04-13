@@ -7,10 +7,12 @@ const getNotPackedCategories = require("./../utilities/packingListController").g
 const getRemindMeStatus = require("./../utilities/packingListController").getRemindMeStatus;
 const resetRemindMePackingList = require("./../utilities/packingListController").resetRemindMePackingList;
 
+var clearState = require("./../utilities/helper").clearState;
+
 //constants
 const states = require("./../constants").states;
 const session = require("./../constants").session;
-const packingStatus = require("./../constants").packingStatus
+const packingStatus = require("./../constants").packingStatus;
 
 const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, {
 
@@ -20,7 +22,7 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
     },
 
     'ListInvokeIntent': function () {
-        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.NOT_STARTED;
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
         this.emitWithState("ListCategoryIntent");
     },
 
@@ -37,7 +39,7 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
             message = "What do you want to pack";
             let reprompt = "You can try give me list"
 
-            if (totalPackingStatus === packingStatus.NOT_STARTED) {
+            if (totalPackingStatus === packingStatus.STARTED) {
                 message += "? "
                 categories.forEach(category => {
                     message += packingList[category].name + ", ";
@@ -66,7 +68,7 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
 
     'AMAZON.YesIntent': function () {
         resetRemindMePackingList.call(this);
-        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.NOT_STARTED;
+        this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
         this.emitWithState("ListCategoryIntent");
     },
 
@@ -118,10 +120,6 @@ const categorySelectHandlers = Alexa.CreateStateHandler(states.CATEGORY_SELECT, 
     }
 });
 
-function clearState() {
-    this.handler.state = '' // delete this.handler.state might cause reference errors
-    delete this.attributes['STATE'];
-}
 
 
 module.exports = categorySelectHandlers;
