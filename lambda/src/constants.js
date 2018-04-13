@@ -29,7 +29,7 @@ module.exports = Object.freeze({
         NOT_INTERESTED: "_NOT_INTERESTED",
         REMIND_LATER: "_REMIND_LATER"
     },
-    
+
     session: {
         CURRENT_TRIP: "_CURRENT_TRIP",
         CURRENT_PACKING_LIST: "_CURRENT_PACKING_LIST",
@@ -38,5 +38,36 @@ module.exports = Object.freeze({
         CURRENT_PACKING_CATEGORY_KEY: "_CURRENT_PACKING_CATEGORY_KEY",
         CURRENT_TOTAL_PACKING_STATUS: "_CURRENT_TOTAL_PACKING_STATUS",
         CURRENT_CATEGORY_PACKING_STATUS: "_CURRENT_CATEGORY_PACKING_STATUS"
+    },
+
+    intents: {
+        NewSession: "NewSession",
+
+        IncompleteTripIntent:"IncompleteTripIntent",
+        StartNewPackingIntent:"StartNewPackingIntent",
+        ResumeOldPackingIntent:"ResumeOldPackingIntent",
+
+        NewTripIntent:"NewTripIntent",
+
+        PackItemIntent:"PackItemIntent",
+        PackNewCategoryIntent:"PackNewCategoryIntent",
+        PackingCompleteIntent:"PackingCompleteIntent",
+        RemindLaterIntent:"RemindLaterIntent",
+        
+
+        ListInvokeIntent: "ListInvokeIntent",
+        ListCategoryIntent: "ListCategoryIntent",
+        SelectCategoryIntent:"SelectCategoryIntent",
+
+        AMAZON: {
+            YesIntent:"YesIntent",
+            NoIntent:"NoIntent",
+            HelpIntent:"HelpIntent",
+            StopIntent:"StopIntent",
+        },
+
+        Unhandled:"Unhandled",
+        SessionEndedRequest:"SessionEndedRequest"
     }
+
 });
