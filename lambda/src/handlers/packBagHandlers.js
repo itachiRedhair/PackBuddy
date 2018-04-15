@@ -23,7 +23,7 @@ const newSessionHandler = function () {
 }
 
 const packItemHandler = function () {
-    let silentAudio = "<audio src='https://s3.amazonaws.com/silent80secondsaudio/silence_80_sec.mp3'/>"
+    // let silentAudio = "<audio src='https://s3.amazonaws.com/silent80secondsaudio/silence_80_sec.mp3'/>"
     getCategoryPackingStatus.call(this);
 
     let item = this.attributes[session.CURRENT_PACKING_ITEM];
@@ -38,8 +38,8 @@ const packItemHandler = function () {
             this.attributes[session.PROMPT_QUEUE].push(prompt);
             prompt = this.attributes[session.PROMPT_QUEUE];
             prompt = prompt.join(" ");
-            prompt += silentAudio;
-            this.response.speak(prompt).listen(messages.PACK_ITEM_REPROMPT + silentAudio + messages.PACK_BAG_STOP);
+            // prompt += silentAudio;
+            this.response.speak(prompt).listen(messages.PACK_ITEM_REPROMPT);
             this.attributes[session.PROMPT_QUEUE] = [];
             break;
 
@@ -140,6 +140,10 @@ const remindMeLaterHandler = function () {
     }
 }
 
+const waitHandler = function () {
+    this.emitWithState(intents.AMAZON.StopIntent);
+}
+
 const stopHandler = function () {
     clearState.call(this);
     ddb.updatePackingList.call(this).then(() => {
@@ -199,6 +203,7 @@ packBagHandlers[intents.AMAZON.HelpIntent] = helpHandler;
 packBagHandlers[intents.AMAZON.YesIntent] = yesHandler;
 packBagHandlers[intents.AMAZON.NoIntent] = noHandler;
 packBagHandlers[intents.RemindLaterIntent] = remindMeLaterHandler;
+packBagHandlers[intents.WaitIntent] = waitHandler;
 packBagHandlers[intents.AMAZON.StopIntent] = stopHandler;
 packBagHandlers[intents.SessionEndedRequest] = sessionEndHandler;
 packBagHandlers[intents.Unhandled] = unhandledHandler;

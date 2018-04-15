@@ -64,7 +64,7 @@ const listCategoryHandler = function () {
 
     } else if (categories.length === 2) {
         message = messages.SELECT_CATEGORY_QUESTION;
-        
+
         if (totalPackingStatus === packingStatus.STARTED) {
             message += "? Select one from " + packingList[categories[0]].name + " or " + packingList[categories[1]].name;
 
@@ -112,6 +112,10 @@ const noHandler = function () {
     this.emitWithState(intents.PackingCompleteIntent);
 }
 
+const waitHandler = function () {
+    this.emitWithState(intents.AMAZON.StopIntent);
+}
+
 const helpHandler = function () {
     this.response.speak(messages.SELECT_CATEGORY_HELP)
         .listen(messages.SELECT_CATEGORY_HELP);
@@ -149,6 +153,7 @@ categorySelectHandlers[intents.ListCategoryIntent] = listCategoryHandler;
 categorySelectHandlers[intents.SelectCategoryIntent] = selectCategoryHandler;
 categorySelectHandlers[intents.AMAZON.YesIntent] = yesHandler;
 categorySelectHandlers[intents.AMAZON.NoIntent] = noHandler;
+categorySelectHandlers[intents.WaitIntent] = waitHandler;
 categorySelectHandlers[intents.AMAZON.HelpIntent] = helpHandler;
 categorySelectHandlers[intents.AMAZON.StopIntent] = stopHandler;
 categorySelectHandlers[intents.SessionEndedRequest] = sessionEndHandler;

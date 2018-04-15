@@ -32,7 +32,7 @@ module.exports = Object.freeze({
         "Pack your"
     ],
 
-    PACK_ITEM_REPROMPT: "You can say yes, no or remind me later.",
+    PACK_ITEM_REPROMPT: "You can say yes, no or remind me later or else you can tell pack buddy to wait and resume later.",
 
     PACK_COMPLETE_PROPMT: "Your packing is complete. Thank you!",
 
@@ -40,7 +40,7 @@ module.exports = Object.freeze({
 
     PACK_BAG_START_NO: "Ok, see you next time!",
 
-    PACK_BAG_STOP: "I am saving your details of incomplete packing. Next time I will remind you. Good Bye!",
+    PACK_BAG_STOP: "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
 
     PACK_BAG_UNHANDLED: "Sorry didn't catch it. Try saying let's start packing.",
 
@@ -54,7 +54,7 @@ module.exports = Object.freeze({
 
     SELECT_CATEGORY_HELP: "Try saying give me a list of categories or you can say let's pack clothes",
 
-    SELECT_CATEGORY_STOP: "I am saving your details of incomplete packing. Next time I will remind you. Good Bye!",
+    SELECT_CATEGORY_STOP: "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
 
     SELECT_CATEGORY_UNHANDLED: "It seems there is some problem. Try saying give me a list of categories."
 

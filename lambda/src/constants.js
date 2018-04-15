@@ -58,7 +58,9 @@ module.exports = Object.freeze({
         ListInvokeIntent: "ListInvokeIntent",
         ListCategoryIntent: "ListCategoryIntent",
         SelectCategoryIntent: "SelectCategoryIntent",
-        StartSelectedCategoryIntent:"StartSelectedCategoryIntent",
+        StartSelectedCategoryIntent: "StartSelectedCategoryIntent",
+
+        WaitIntent: "WaitIntent",
 
         AMAZON: {
             YesIntent: "AMAZON.YesIntent",
