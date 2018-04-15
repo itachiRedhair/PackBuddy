@@ -9,16 +9,17 @@ const generatePackingList = require("./../utilities/packingListController").crea
 const initializePackingSession = require("./../utilities/packingListController").setPackingSession;
 const clearState = require("./../utilities/helper").clearState;
 
+const AlexaDeviceAddressClient = require('./../utilities/deviceAddress');
+
 
 //constants imports
 const states = require("./../constants").states;
 const intents = require("./../constants").intents;
-
+const messages = require("./../messages");
 
 //handler functions
 const newSessionHandler = function () {
-    const message = "Tell me about your trip. Where are you going?";
-    this.response.speak(message).listen("You can say I am going to Washington");
+    this.response.speak(messages.NEW_TRIP_START_QUESTION).listen(messages.NEW_TRIP_START_QUESTION_REPROMPT);
     this.emit(":responseReady");
 }
 
@@ -35,7 +36,7 @@ const newTripHandler = function () {
                     initializePackingSession.call(this, tripDetails);
                     // console.log('data of dynamodb', data);
                     this.handler.state = states.PACKING;
-                    this.emitWithState("NewSession");
+                    this.emitWithState(intents.NewSession);
                 }).catch(error => {
                     console.log('error catched in dynamodb', error);
                 });
@@ -46,25 +47,24 @@ const newTripHandler = function () {
 }
 
 const helpHandler = function () {
-    const message = 'Try saying I am going to Los Angeles';
-    this.response.speak(message)
-        .listen(message);
+    this.response.speak(messages.NEW_TRIP_HELP)
+        .listen(messages.NEW_TRIP_HELP);
     this.emit(':responseReady');
 }
 
 const yesHandler = function () {
-    this.emitWithState('NewSession');
+    this.emitWithState(intents.NewSession);
 }
 
 const noHandler = function () {
     clearState.call(this);
-    this.response.speak('Ok, see you next time!');
+    this.response.speak(messages.NEW_TRIP_NO);
     this.emit(':responseReady');
 }
 
 const stopHandler = function () {
     clearState.call(this);
-    this.response.speak("Good Bye");
+    this.response.speak(messages.NEW_TRIP_STOP);
     this.emit(":responseReady");
 }
 
@@ -74,9 +74,8 @@ const sessionEndHandler = function () {
 }
 
 const unhandlerHandler = function () {
-    const message = 'Try saying I am going to Los Angeles';
-    this.response.speak(message)
-        .listen(message);
+    this.response.speak(messages.NEW_TRIP_UNHANDLED)
+        .listen(messages.NEW_TRIP_UNHANDLED);
     this.emit(':responseReady');
 }
 
@@ -87,21 +86,85 @@ const delegateSlotCollection = function () {
     // console.log("current dialogState: " + this.event.request.dialogState);
     if (this.event.request.dialogState === "STARTED") {
         // console.log("in Beginning");
-        var updatedIntent = this.event.request.intent;
-        //optionally pre-fill slots: update the intent object with slot values for which
-        //you have defaults, then return Dialog.Delegate with this updated intent
-        // in the updatedIntent property
-        this.emit(":delegate", updatedIntent);
+        let updatedIntent = this.event.request.intent;
+
+        const consentToken = this.event.context.System.user.permissions.consentToken;
+        const fromCity = this.event.request.intent.slots.fromCity.value;
+
+        console.log(consentToken);
+        if (consentToken) {
+            console.log('inside consent token found condition')
+            getDeviceAddress.call(this).then((fromCityValue) => {
+                console.log('before askForCity call in not started dialogstate condition');
+                if (fromCityValue !== null) {
+                    console.log('fromCityValue', fromCityValue);
+                    updatedIntent.slots.fromCity.value = fromCityValue;
+                } else {
+                    this.emit(":delegate", updatedIntent);
+                }
+                // askForCityIfCountryFound.call(this);
+                let prompt = "Are you going from " + fromCityValue + "?";
+                this.emit(':confirmSlot', "fromCity", prompt, prompt, updatedIntent);
+                // this.emit(":delegate", updatedIntent);
+            }).catch(err => {
+                console.log('error inside delegate function get device address call', err);
+            });
+        } else {
+            // askForCityIfCountryFound.call(this);
+            this.emit(":delegate", updatedIntent);
+        }
+
     } else if (this.event.request.dialogState !== "COMPLETED") {
-        // console.log("in not completed");
-        // return a Dialog.Delegate directive with no updatedIntent property.
+        console.log('before askForCity call in not completed dialogstate condition');
+
+        // askForCityIfCountryFound.call(this);
+
         this.emit(":delegate");
     } else {
-        // console.log("in completed");
-        // console.log("returning: " + JSON.stringify(this.event.request.intent));
-        // Dialog is now complete and all required slots should be filled,
-        // so call your normal intent handler.
         return this.event.request.intent;
+    }
+}
+
+
+const getDeviceAddress = function () {
+    return new Promise((resolve, reject) => {
+        const deviceId = this.event.context.System.device.deviceId;
+        const apiEndpoint = this.event.context.System.apiEndpoint;
+        const consentToken = this.event.context.System.user.permissions.consentToken;
+
+        const alexaDeviceAddressClient = new AlexaDeviceAddressClient(apiEndpoint, deviceId, consentToken);
+
+        let deviceAddressRequest = alexaDeviceAddressClient.getCityFromDeviceAddress();
+
+        deviceAddressRequest.then((addressResponse) => {
+            console.log("inside then of deviceaddrssRequest,", addressResponse);
+            resolve(addressResponse);
+            console.info("Ending getAddressHandler()");
+        }).catch(err => {
+            console.log('error whiel getting ocuntry and postal code', err);
+            reject(err);
+        });
+    })
+}
+
+const askForCityIfCountryFound = function () {
+    let toCountry = this.event.request.intent.slots.toCountry.value;
+    let fromCountry = this.event.request.intent.slots.fromCountry.value;
+    let toCity = this.event.request.intent.slots.toCity.value;
+    let fromCity = this.event.request.intent.slots.fromCity.value;
+
+    let updatedIntent = this.event.request.intent;
+
+    if (!toCity && toCountry) {
+        let message = "Tell which city you are going to in " + toCountry;
+        console.log('before this.emit of toCity elicitslot');
+        this.emit(':elicitSlot', "toCity", message, message, updatedIntent);
+    }
+
+    if (fromCountry && !fromCity) {
+        let message = "Tell which city you are going from in " + fromCountry;
+        console.log('before this.emit of fromCity elicitslot');
+        this.emit(':elicitSlot', "fromCity", message, message, updatedIntent);
     }
 }
 

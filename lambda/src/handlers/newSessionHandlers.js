@@ -13,25 +13,40 @@ const states = require("./../constants").states;
 const session = require("./../constants").session;
 const packingStatus = require("./../constants").packingStatus;
 const intents = require("./../constants").intents;
+const messages = require("./../messages");
 
 
 //handler functions
 const newSessionHandler = function () {
+
+    if (this.event.request.type === "IntentRequest") {
+        switch (this.event.request.intent.name) {
+            case intents.StartNewPackingIntent:
+                this.emit(intents.StartNewPackingIntent);
+            case intents.ResumeOldPackingIntent:
+                this.emit(intents.ResumeOldPackingIntent);
+            case intents.IncompleteTripIntent:
+                this.emit(intents.IncompleteTripIntent);
+            case intents.ListInvokeIntent:
+                this.emit(intents.IncompleteTripIntent);
+        }
+    }
+
     if (Object.keys(this.attributes).length === 0) {
         //if it's the first time the skill has been invoked
     }
+
     let userId = this.event.session.user.userId;
     getIncompleteTripDetails(userId).then(incompleteTripDetails => {
         console.log('in newsessionhandler incompletripdetails->', incompleteTripDetails);
         if (incompleteTripDetails !== null) {
-            let message = 'It seems you are not done with your last packing? Do you want to resume it or start with the new one?'
-            this.response.speak('Hi I am Pack Buddy. ' + message)
-                .listen(message);
+            this.response.speak(messages.GREETING + " " + messages.START_QUESTION_WITH_REMINDER)
+                .listen(messages.START_QUESTION_WITH_REMINDER);
             this.emit(':responseReady');
         } else {
             this.handler.state = states.NEW_TRIP;
-            this.response.speak('Hi I am Pack Buddy. Do you want help with packing?')
-                .listen('Do you need help with packing?');
+            this.response.speak(messages.GREETING + " " + messages.START_QUESTION)
+                .listen(messages.START_QUESTION);
             this.emit(':responseReady');
         }
     }).catch(err => {
@@ -44,27 +59,37 @@ const incompleteTripHandler = function () {
     // this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.STARTED;
     let userId = this.event.session.user.userId;
     getIncompleteTripDetails(userId).then(tripDetails => {
+        if (!tripDetails || tripDetails === null || Object.keys(tripDetails).length === 0) {
+            console.log('emmiting newssion from incomplete trip handler');
+            this.emit(intents.NewSession);
+        }
+        console.log('restiing and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
         resetRemindMePackingList.call(this);
         this.handler.state = states.CATEGORY_SELECT;
-        this.emitWithState("NewSession");
+        this.emitWithState(intents.NewSession);
     });
 }
 
 const startNewPackingHandler = function () {
     console.log('here in start new packing intent');
     this.handler.state = states.NEW_TRIP;
-    this.emitWithState('NewSession')
+    this.emitWithState(intents.NewSession)
 }
 
 const resumeOldPackingHandler = function () {
     console.log('here in resuem old packing intent');
-    this.emit("IncompleteTripIntent");
+    this.emit(intents.IncompleteTripIntent);
+}
+
+const stopHandler = function () {
+    this.response.speak(messages.NEW_SESSION_STOP);
+    this.emit(":responseReady");
 }
 
 const unhandledHandler = function () {
     clearState.call(this);
-    this.emit('NewSession');
+    this.emit(intents.NewSession);
 }
 
 
@@ -72,9 +97,10 @@ const unhandledHandler = function () {
 let newSessionHandlers = {};
 
 newSessionHandlers[intents.NewSession] = newSessionHandler;
-newSessionHandler[intents.IncompleteTripIntent] = incompleteTripHandler;
-newSessionHandler[intents.StartNewPackingIntent] = startNewPackingHandler;
-newSessionHandler[intents.ResumeOldPackingIntent] = resumeOldPackingHandler;
-newSessionHandler[intents.Unhandled] = unhandledHandler;
+newSessionHandlers[intents.IncompleteTripIntent] = incompleteTripHandler;
+newSessionHandlers[intents.StartNewPackingIntent] = startNewPackingHandler;
+newSessionHandlers[intents.ResumeOldPackingIntent] = resumeOldPackingHandler;
+newSessionHandlers[intents.AMAZON.StopIntent] = stopHandler;
+newSessionHandlers[intents.Unhandled] = unhandledHandler;
 
 module.exports = newSessionHandlers;

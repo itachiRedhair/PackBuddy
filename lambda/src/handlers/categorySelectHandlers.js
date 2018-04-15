@@ -14,17 +14,18 @@ const states = require("./../constants").states;
 const session = require("./../constants").session;
 const packingStatus = require("./../constants").packingStatus;
 const intents = require("./../constants").intents;
+const messages = require("./../messages");
 
 
 //handler functions
 const newSessionHandler = function () {
     //do some handling and emit list category intent
-    this.emitWithState("ListCategoryIntent");
+    this.emitWithState(intents.ListCategoryIntent);
 }
 
 const listInvokeHandler = function () {
     this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
-    this.emitWithState("ListCategoryIntent");
+    this.emitWithState(intents.ListCategoryIntent);
 }
 
 const listCategoryHandler = function () {
@@ -32,74 +33,95 @@ const listCategoryHandler = function () {
 
     let message = '';
     console.log('in list category intent', categories)
-    if (categories.length) {
-        let packingList = this.attributes[session.CURRENT_PACKING_LIST];
-        let totalPackingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
+    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
+    let totalPackingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
 
-        message = "What do you want to pack";
-        let reprompt = "You can try give me list"
+    if (categories.length > 2) {
+        message = messages.SELECT_CATEGORY_QUESTION;
 
         if (totalPackingStatus === packingStatus.STARTED) {
-            message += "? "
+            message += "? ";
+            message += "Select one from ";
+
             categories.forEach(category => {
                 message += packingList[category].name + ", ";
             });
-            message += "Select one."
 
-            this.response.speak(message).listen(reprompt);
+            this.response.speak(message).listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
             this.emit(":responseReady");
         } else {
-            this.response.speak(message + " now?").listen(reprompt);
+            this.response.speak(message + " now?").listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
             this.emit(":responseReady");
         }
+
+    } else if (categories.length === 1) {
+
+        let selectedCategory = categories[0];
+        let prompt = messages.REMAINING_SINGLE_CATEGORY_PROMPT + selectedCategory + ". ";
+        this.attributes[session.PROMPT_QUEUE] = [prompt];
+        this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = selectedCategory;
+        this.emitWithState(intents.StartSelectedCategoryIntent);
+
+    } else if (categories.length === 2) {
+        message = messages.SELECT_CATEGORY_QUESTION;
+        
+        if (totalPackingStatus === packingStatus.STARTED) {
+            message += "? Select one from " + packingList[categories[0]].name + " or " + packingList[categories[1]].name;
+
+            this.response.speak(message).listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.emit(":responseReady");
+        } else {
+            this.response.speak(message + " now?").listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.emit(":responseReady");
+        }
+
     } else {
         if (getRemindMeStatus.call(this) === true) {
             console.log('get remind me status = true');
-            let message = 'There are some items you asked me to remind me. Do you want to pack them now?'
-            this.response.speak(message).listen(message);
+            this.response.speak(messages.REMIND_ITEMS_PACK_QUESTION).listen(messages.REMIND_ITEMS_PACK_QUESTION);
             this.emit(":responseReady");
         } else {
             console.log('get remind me status = false');
             this.handler.state = states.PACKING;
-            this.emitWithState("PackingCompleteIntent");
+            this.emitWithState(intents.PackingCompleteIntent);
         }
     }
 }
 
 const selectCategoryHandler = function () {
-    //get value in slot and emit pack Bag intent with current category session attribute
     let selectedCategory = this.event.request.intent.slots.selectedCategory.resolutions.resolutionsPerAuthority[0].values[0].value.name;
-    let packingList = this.attributes[session.CURRENT_PACKING_LIST];
-    // this.response.speak("Let's start packing your " + packingList[selectedCategory].name);
     this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = selectedCategory;
+    this.emitWithState(intents.StartSelectedCategoryIntent)
+}
+
+const startSelectedCategoryHandler = function () {
     this.attributes[session.CURRENT_CATEGORY_PACKING_STATUS] = packingStatus.IN_PROGRESS;
     this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.IN_PROGRESS;
     this.handler.state = states.PACKING;
-    this.emitWithState("PackNewCategoryIntent");
+    this.emitWithState(intents.PackNewCategoryIntent);
 }
 
 const yesHandler = function () {
     resetRemindMePackingList.call(this);
     this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
-    this.emitWithState("ListCategoryIntent");
+    this.emitWithState(intents.ListCategoryIntent);
 }
 
 const noHandler = function () {
     this.handler.state = states.PACKING;
-    this.emitWithState("PackingCompleteIntent");
+    this.emitWithState(intents.PackingCompleteIntent);
 }
 
 const helpHandler = function () {
-    const message = "Try saying let's pack clothes ";
-    this.response.speak(message)
-        .listen(message);
+    this.response.speak(messages.SELECT_CATEGORY_HELP)
+        .listen(messages.SELECT_CATEGORY_HELP);
     this.emit(':responseReady');
 }
 
 const stopHandler = function () {
     clearState.call(this);
     ddb.updatePackingList.call(this).then(() => {
-        this.response.speak("Good Bye");
+        this.response.speak(messages.SELECT_CATEGORY_STOP);
         this.emit(":responseReady");
     });
 }
@@ -112,9 +134,8 @@ const sessionEndHandler = function () {
 }
 
 const unhandledHandler = function () {
-    const message = "You can say give me list and then proceed with the category";
-    this.response.speak(message)
-        .listen(message);
+    this.response.speak(messages.SELECT_CATEGORY_UNHANDLED)
+        .listen(messages.SELECT_CATEGORY_UNHANDLED);
     this.emit(':responseReady');
 }
 
@@ -131,6 +152,8 @@ categorySelectHandlers[intents.AMAZON.NoIntent] = noHandler;
 categorySelectHandlers[intents.AMAZON.HelpIntent] = helpHandler;
 categorySelectHandlers[intents.AMAZON.StopIntent] = stopHandler;
 categorySelectHandlers[intents.SessionEndedRequest] = sessionEndHandler;
+categorySelectHandlers[intents.StartSelectedCategoryIntent] = startSelectedCategoryHandler;
 
 let categorySelectHandlersWithState = Alexa.CreateStateHandler(states.CATEGORY_SELECT, categorySelectHandlers);
+
 module.exports = categorySelectHandlersWithState;

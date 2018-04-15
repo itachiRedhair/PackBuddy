@@ -47,6 +47,7 @@ function setPackingSession(trip) {
     this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
     this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.STARTED;
     this.attributes[session.CURRENT_CATEGORY_PACKING_STATUS] = packingStatus.NOT_STARTED;
+    this.attributes[session.PROMPT_QUEUE] = [];
     // console.log('in setpackingsession current_packing_list', this.attributes[session.CURRENT_PACKING_LIST]);
 }
 

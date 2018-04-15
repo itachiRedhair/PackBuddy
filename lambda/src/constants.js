@@ -37,37 +37,38 @@ module.exports = Object.freeze({
         CURRENT_PACKING_ITEM_KEY: "_CURRENT_PACKING_ITEM_KEY",
         CURRENT_PACKING_CATEGORY_KEY: "_CURRENT_PACKING_CATEGORY_KEY",
         CURRENT_TOTAL_PACKING_STATUS: "_CURRENT_TOTAL_PACKING_STATUS",
-        CURRENT_CATEGORY_PACKING_STATUS: "_CURRENT_CATEGORY_PACKING_STATUS"
+        CURRENT_CATEGORY_PACKING_STATUS: "_CURRENT_CATEGORY_PACKING_STATUS",
+        PROMPT_QUEUE: "_PROMPT_QUEUE"
     },
 
     intents: {
         NewSession: "NewSession",
 
-        IncompleteTripIntent:"IncompleteTripIntent",
-        StartNewPackingIntent:"StartNewPackingIntent",
-        ResumeOldPackingIntent:"ResumeOldPackingIntent",
+        IncompleteTripIntent: "IncompleteTripIntent",
+        StartNewPackingIntent: "StartNewPackingIntent",
+        ResumeOldPackingIntent: "ResumeOldPackingIntent",
 
-        NewTripIntent:"NewTripIntent",
+        NewTripIntent: "NewTripIntent",
 
-        PackItemIntent:"PackItemIntent",
-        PackNewCategoryIntent:"PackNewCategoryIntent",
-        PackingCompleteIntent:"PackingCompleteIntent",
-        RemindLaterIntent:"RemindLaterIntent",
-        
+        PackItemIntent: "PackItemIntent",
+        PackNewCategoryIntent: "PackNewCategoryIntent",
+        PackingCompleteIntent: "PackingCompleteIntent",
+        RemindLaterIntent: "RemindLaterIntent",
 
         ListInvokeIntent: "ListInvokeIntent",
         ListCategoryIntent: "ListCategoryIntent",
-        SelectCategoryIntent:"SelectCategoryIntent",
+        SelectCategoryIntent: "SelectCategoryIntent",
+        StartSelectedCategoryIntent:"StartSelectedCategoryIntent",
 
         AMAZON: {
-            YesIntent:"YesIntent",
-            NoIntent:"NoIntent",
-            HelpIntent:"HelpIntent",
-            StopIntent:"StopIntent",
+            YesIntent: "AMAZON.YesIntent",
+            NoIntent: "AMAZON.NoIntent",
+            HelpIntent: "AMAZON.HelpIntent",
+            StopIntent: "AMAZON.StopIntent",
         },
 
-        Unhandled:"Unhandled",
-        SessionEndedRequest:"SessionEndedRequest"
+        Unhandled: "Unhandled",
+        SessionEndedRequest: "SessionEndedRequest"
     }
 
 });
