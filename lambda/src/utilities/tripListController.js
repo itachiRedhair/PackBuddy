@@ -7,7 +7,7 @@ function getIncompleteTripDetails(userId) {
 
             console.log('at the start of get all items data, data->', data, 'data.Item=>', data.Item);
 
-            if (!data.Item) {
+            if (data.Item === undefined) {
                 console.log('seems data.item is undefined, so returning null')
                 resolve(null);
             }

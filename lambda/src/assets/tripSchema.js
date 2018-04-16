@@ -11,10 +11,7 @@ var trip = {
     },
     packing_list: {},
     packing_status: '_NOT_STARTED',
-    last_packed: {
-        item_name: '',
-        category: ''
-    },
+    selected_category: '',
     // total_item_count: 0,
     // packed_item_count: 0,
     remind_me: false

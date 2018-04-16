@@ -113,6 +113,7 @@ function updatePackingList() {
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
     let packingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
     let remindMeStatus = getRemindMeStatus.call(this);
+    let selectedCategory = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] ? this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] : 'null'
     console.log("inside update packng list, remindMeStatus=>", remindMeStatus)
     console.log('inisde ddb update packing list', userId, tripId);
     return new Promise((resolve, reject) => {
@@ -122,14 +123,19 @@ function updatePackingList() {
             Key: {
                 userId: userId
             },
-            UpdateExpression: "SET trip_list.#ti.packing_list = :pl, trip_list.#ti.remind_me = :rms, trip_list.#ti.packing_status = :ps",
+            UpdateExpression: "SET trip_list.#ti.#pl = :pl, trip_list.#ti.#rm = :rms, trip_list.#ti.#ps = :ps, trip_list.#ti.#sc = :sc ",
             ExpressionAttributeValues: {
                 ":pl": packingList,
                 ":rms": remindMeStatus,
-                ":ps": packingStatus
+                ":ps": packingStatus,
+                ":sc": selectedCategory
             },
             ExpressionAttributeNames: {
-                "#ti": tripId
+                "#ti": tripId,
+                "#pl": "packing_list",
+                "#rm": "remind_me",
+                "#ps": "packing_status",
+                "#sc": "selected_category"
             }
         };
 

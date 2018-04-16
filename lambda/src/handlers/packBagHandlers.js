@@ -48,6 +48,7 @@ const packItemHandler = function () {
             // console.log('here in switch case completed in packitemintent');
             let categoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY]
             this.attributes[session.CURRENT_PACKING_LIST][categoryKey]['all_packed'] = true;
+            this.attributes[session.currentPackingCategoryKey] = 'null';
             this.handler.state = states.CATEGORY_SELECT;
             this.emitWithState(intents.ListCategoryIntent);
             break;
@@ -160,8 +161,8 @@ const sessionEndHandler = function () {
 }
 
 const unhandledHandler = function () {
-    this.response.speak(messages.PACK_BAG_UNHANDLED)
-        .listen(messages.PACK_BAG_UNHANDLED);
+    this.response.speak(messages.PACK_ITEM_REPROMPT)
+        .listen(messages.PACK_ITEM_REPROMPT);
     this.emit(':responseReady');
 }
 
