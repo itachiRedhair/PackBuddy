@@ -36,6 +36,8 @@ const listCategoryHandler = function () {
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
     let totalPackingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
 
+    let cardInfo = generateCardInfo.call(this, packingList);
+
     if (categories.length > 2) {
         message = messages.SELECT_CATEGORY_QUESTION;
 
@@ -48,9 +50,11 @@ const listCategoryHandler = function () {
             });
 
             this.response.speak(message).listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.response.cardRenderer(cardInfo.cardTitle, cardInfo.cardContent, cardInfo.cardImage);
             this.emit(":responseReady");
         } else {
             this.response.speak(message + " now?").listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.response.cardRenderer(cardInfo.cardTitle, cardInfo.cardContent, cardInfo.cardImage);
             this.emit(":responseReady");
         }
 
@@ -69,9 +73,11 @@ const listCategoryHandler = function () {
             message += "? Select one from " + packingList[categories[0]].name + " or " + packingList[categories[1]].name;
 
             this.response.speak(message).listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.response.cardRenderer(cardInfo.cardTitle, cardInfo.cardContent, cardInfo.cardImage);
             this.emit(":responseReady");
         } else {
             this.response.speak(message + " now?").listen(messages.SELECT_CATEGORY_QUESTION_REPROMPT);
+            this.response.cardRenderer(cardInfo.cardTitle, cardInfo.cardContent, cardInfo.cardImage);
             this.emit(":responseReady");
         }
 
@@ -143,6 +149,23 @@ const unhandledHandler = function () {
     this.emit(':responseReady');
 }
 
+
+//helper functions
+function generateCardInfo(packingList) {
+    let cardContent = "";
+    for (let category in packingList) {
+        cardContent += packingList[category].name + ":\n";
+        let items = packingList[category].items;
+        for (let item in items) {
+            cardContent += items[item].name + " -> " + items[item].status + "\n";
+        }
+    };
+    return {
+        cardTitle: "--Your List--",
+        cardContent: cardContent,
+        cardImage: ""
+    }
+}
 
 //handlers initialization
 let categorySelectHandlers = {};

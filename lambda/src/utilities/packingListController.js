@@ -2,7 +2,9 @@
 
 var packingSchemaFixed = require('../assets/packingItems').packingItemsFixed;
 var packingSchemaWeather = require('../assets/packingItems').packingItemWeather;
-var fetchWeatherData = require('../utilities/weather').getWeatherData;
+
+const fetchWeatherCustomizedList = require("./customizedList").getWeatherCustomizedList;
+const getGenderCustomizedList = require("./customizedList").getGenderCustomizedList;
 
 //constants
 const packingStatus = require("./../constants").packingStatus;
@@ -10,33 +12,49 @@ const packingItemStatus = require("./../constants").packingItemStatus;
 const session = require("./../constants").session;
 
 function createPackingList(destination, date, duration) {
+    let userInfo = this.attributes[session.USER_INFO];
+    console.log('inside createpackinglsit,userinfo=>', userInfo);
     return new Promise((resolve, reject) => {
-        fetchWeatherData(destination, date, duration)
-            .then(data => {
-                let customizedList = getWeatherBasedPackingList(data['temperatureMax']);
-                const fixedList = JSON.parse(JSON.stringify(packingSchemaFixed));
+        getCustomizedLists(userInfo, destination, date, duration).then(customizedListArray => {
+            const fixedList = JSON.parse(JSON.stringify(packingSchemaFixed));
+            console.log("fixedList=>", fixedList);
+
+            customizedListArray.forEach(customizedList => {
                 const keys = Object.keys(customizedList);
                 keys.forEach(key => Object.assign(fixedList[key]['items'], customizedList[key]['items']));
-                // console.log(JSON.stringify(fixedList, null, 4));
-                resolve(fixedList);
-            }).catch(err => {
-                console.log('Error', err);
-                reject(err);
             })
 
+            console.log("packingList=>", fixedList);
+            resolve(fixedList);
+        }).catch(err => {
+            console.log(err);
+            reject(err);
+        })
     });
 }
 
-function getWeatherBasedPackingList(temperature) {
-    let condition = getWeatherCondition(temperature);
-    return packingSchemaWeather[condition];
+function getCustomizedLists(userInfo, destination, date, duration) {
+    return new Promise((resolve, reject) => {
+
+        let getWeatherPackingList = fetchWeatherCustomizedList(destination, date, duration);
+
+        let promiseArr = [getWeatherPackingList];
+
+        if (userInfo.gender) {
+            let getGenderPackingList = getGenderCustomizedList(userInfo.gender);
+            promiseArr.push(getGenderPackingList);
+        }
+
+        Promise.all(
+            promiseArr
+        ).then(customizedListArray => {
+            console.log('customizeListArray=>,', customizedListArray)
+            resolve(customizedListArray);
+        })
+    })
 }
 
-function getWeatherCondition(temperature) {
-    if (temperature <= 15) return 'cold';
-    else if (temperature > 15 && temperature < 50) return 'hot';
-    else return 'rainy';
-}
+
 
 function setPackingSession(trip) {
     // console.log('in setpackingsession packingList', packingList);

@@ -190,7 +190,7 @@ const generateTrip = function () {
         tripSchema.trip_id = fromCity + "_" + toCity + "_" + date;
         // console.log('tripSchema', tripSchema);
 
-        generatePackingList(toCity, date, duration)
+        generatePackingList.call(this, toCity, date, duration)
             .then(list => {
                 let count = 0;
                 for (var listKey in list) {

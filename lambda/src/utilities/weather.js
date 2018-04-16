@@ -1,6 +1,7 @@
 'use strict';
 
-var fetch = require("node-fetch");
+const fetch = require("node-fetch");
+const packingSchemaWeather = require('../assets/packingItems').packingItemWeather;
 
 function getWeatherData(city, date, duration) {
     return getLatLngByCity(city).then(location => {
@@ -23,6 +24,7 @@ function getWeatherData(city, date, duration) {
         })
     })
 }
+
 function getLatLngByCity(city) {
     return new Promise((resolve, reject) => {
         fetch("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCz1ERY4zRYJzyqgMLIJRL_LdlOO38fSUM&address=" + city)
@@ -37,4 +39,18 @@ function getLatLngByCity(city) {
     })
 };
 
-module.exports = { getWeatherData };
+
+
+function getWeatherBasedPackingList(temperature) {
+    let condition = getWeatherCondition(temperature);
+    return packingSchemaWeather[condition];
+}
+
+function getWeatherCondition(temperature) {
+    if (temperature <= 15) return 'cold';
+    else if (temperature > 15 && temperature < 50) return 'hot';
+    else return 'rainy';
+}
+
+
+module.exports = { getWeatherData, getWeatherBasedPackingList };

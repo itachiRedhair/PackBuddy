@@ -107,7 +107,7 @@ var packingItemsFixed = {
     }
 }
 
-var packingItemWeather = {
+const packingItemWeather = {
     cold: {
         'clothing': {
             items: {
@@ -176,4 +176,47 @@ var packingItemWeather = {
         }
     }
 }
-module.exports = { packingItemsFixed, packingItemWeather };
+
+const packingItemGender = {
+    male: {
+        'toiletries': {
+            items: {
+                'shaving_cream': {
+                    'name': 'shaving cream',
+                    'status': '_NOT_PACKED',
+                    'meta_info': {},
+                    'packed_on': 'null',
+                    'preferred_baggage': 'cabin'
+                },
+                'mens_perfume': {
+                    'name': "men's perfume",
+                    'status': '_NOT_PACKED',
+                    'meta_info': {},
+                    'packed_on': 'null',
+                    'preferred_baggage': 'cabin'
+                }
+            }
+        }
+    },
+    female: {
+        'toiletries': {
+            items: {
+                'makeup_box': {
+                    'name': 'makeup box',
+                    'status': '_NOT_PACKED',
+                    'meta_info': {},
+                    'packed_on': 'null',
+                    'preferred_baggage': 'cabin'
+                },
+                'womens_perfume': {
+                    'name': "women's perfume",
+                    'status': '_NOT_PACKED',
+                    'meta_info': {},
+                    'packed_on': 'null',
+                    'preferred_baggage': 'cabin'
+                }
+            }
+        }
+    }
+}
+module.exports = { packingItemsFixed, packingItemWeather, packingItemGender };

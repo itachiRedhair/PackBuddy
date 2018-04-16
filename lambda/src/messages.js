@@ -10,7 +10,7 @@ module.exports = Object.freeze({
 
     NEW_SESSION_STOP: "Ok, See you next time!",
 
-    NEW_TRIP_START_QUESTION: "Tell me about your trip. Where are you going?",
+    NEW_TRIP_START_QUESTION: "Tell me about your trip. Which city are you heading to?",
 
     NEW_TRIP_START_QUESTION_REPROMPT: "You can say I am going to Washington",
 
