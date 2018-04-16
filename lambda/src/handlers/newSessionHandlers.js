@@ -6,7 +6,8 @@ const Alexa = require("alexa-sdk");
 const initializePackingSession = require("./../utilities/packingListController").setPackingSession;
 const resetRemindMePackingList = require("./../utilities/packingListController").resetRemindMePackingList;
 const getIncompleteTripDetails = require("./../utilities/tripListController").getIncompleteTripDetails;
-var clearState = require("./../utilities/helper").clearState;
+const clearState = require("./../utilities/helper").clearState;
+const getUserInfoFromFB = require("./../utilities/helper").getUserInfoFromFB;
 
 //constants imports
 const states = require("./../constants").states;
@@ -19,43 +20,53 @@ const messages = require("./../messages");
 //handler functions
 const newSessionHandler = function () {
 
-    if (this.event.request.type === "IntentRequest") {
-        switch (this.event.request.intent.name) {
-            case intents.StartNewPackingIntent:
-                this.emit(intents.StartNewPackingIntent);
-                break;
-            case intents.ResumeOldPackingIntent:
-                this.emit(intents.ResumeOldPackingIntent);
-                break;
-            case intents.IncompleteTripIntent:
-                this.emit(intents.IncompleteTripIntent);
-                break;
-            case intents.ListInvokeIntent:
-                this.emit(intents.ListInvokeIntent);
-                break;
-        }
-    }
+    getUserInfoFromFB.call(this).then((userInfo) => {
 
-    if (Object.keys(this.attributes).length === 0) {
-        //if it's the first time the skill has been invoked
-    }
-
-    let userId = this.event.session.user.userId;
-    getIncompleteTripDetails(userId).then(incompleteTripDetails => {
-        console.log('in newsessionhandler incompletripdetails->', incompleteTripDetails);
-        if (incompleteTripDetails !== null) {
-            this.response.speak(messages.GREETING + " " + messages.START_QUESTION_WITH_REMINDER)
-                .listen(messages.START_QUESTION_WITH_REMINDER);
-            this.emit(':responseReady');
+        if (userInfo !== null) {
+            this.attributes[session.USER_INFO] = userInfo;
+            console.log('in newSessionhandler, got userInfo,=>', userInfo);
         } else {
-            this.handler.state = states.NEW_TRIP;
-            this.response.speak(messages.GREETING + " " + messages.START_QUESTION)
-                .listen(messages.START_QUESTION);
-            this.emit(':responseReady');
+            console.log('got aint no info');
         }
-    }).catch(err => {
-        console.log(err);
-    });
+
+        if (this.event.request.type === "IntentRequest") {
+            switch (this.event.request.intent.name) {
+                case intents.StartNewPackingIntent:
+                    this.emit(intents.StartNewPackingIntent);
+                    break;
+                case intents.ResumeOldPackingIntent:
+                    this.emit(intents.ResumeOldPackingIntent);
+                    break;
+                case intents.IncompleteTripIntent:
+                    this.emit(intents.IncompleteTripIntent);
+                    break;
+                case intents.ListInvokeIntent:
+                    this.emit(intents.ListInvokeIntent);
+                    break;
+            }
+        }
+
+        if (Object.keys(this.attributes).length === 0) {
+            //if it's the first time the skill has been invoked
+        }
+
+        let userId = this.event.session.user.userId;
+        getIncompleteTripDetails(userId).then(incompleteTripDetails => {
+            console.log('in newsessionhandler incompletripdetails->', incompleteTripDetails);
+            if (incompleteTripDetails !== null) {
+                this.response.speak(messages.GREETING + " " + messages.START_QUESTION_WITH_REMINDER)
+                    .listen(messages.START_QUESTION_WITH_REMINDER);
+                this.emit(':responseReady');
+            } else {
+                this.handler.state = states.NEW_TRIP;
+                this.response.speak(messages.GREETING + " " + messages.START_QUESTION)
+                    .listen(messages.START_QUESTION);
+                this.emit(':responseReady');
+            }
+        }).catch(err => {
+            console.log(err);
+        });
+    })
 }
 
 const incompleteTripHandler = function () {
