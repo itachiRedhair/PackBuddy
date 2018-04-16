@@ -8,7 +8,6 @@
   "dependencies": {
     "alexa-sdk": "^1.0.0",
     "aws-sdk": "^2.219.1",
-    "https-proxy-agent": "^2.2.1",
     "node-fetch": "^2.1.2"
   },
   "devDependencies": {

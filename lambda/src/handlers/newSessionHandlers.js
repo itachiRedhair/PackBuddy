@@ -23,12 +23,16 @@ const newSessionHandler = function () {
         switch (this.event.request.intent.name) {
             case intents.StartNewPackingIntent:
                 this.emit(intents.StartNewPackingIntent);
+                break;
             case intents.ResumeOldPackingIntent:
                 this.emit(intents.ResumeOldPackingIntent);
+                break;
             case intents.IncompleteTripIntent:
                 this.emit(intents.IncompleteTripIntent);
+                break;
             case intents.ListInvokeIntent:
-                this.emit(intents.IncompleteTripIntent);
+                this.emit(intents.ListInvokeIntent);
+                break;
         }
     }
 
@@ -59,7 +63,7 @@ const incompleteTripHandler = function () {
     // this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.STARTED;
     let userId = this.event.session.user.userId;
     getIncompleteTripDetails(userId).then(tripDetails => {
-        if (!tripDetails || tripDetails === null || Object.keys(tripDetails).length === 0) {
+        if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
             console.log('emmiting newssion from incomplete trip handler');
             this.emit(intents.NewSession);
         }
@@ -82,25 +86,44 @@ const resumeOldPackingHandler = function () {
     let userId = this.event.session.user.userId;
 
     getIncompleteTripDetails(userId).then(tripDetails => {
-        if (!tripDetails || tripDetails === null || Object.keys(tripDetails).length === 0) {
+        console.log('in resume odl packing, tripdetails=>', tripDetails);
+        if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
             console.log('emmiting newssion from resume old packing handler');
             this.emit(intents.NewSession);
         }
 
-        console.log('restiing and startin categoryselect handler');
+        console.log('resetting and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
         this.handler.state = states.CATEGORY_SELECT;
 
         console.log('in resume old packing, selected_category=>', tripDetails.selected_category);
 
         if (tripDetails.selected_category !== 'null') {
+            console.log('emiiting start selected ccategory intent');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = tripDetails.selected_category;
             this.emitWithState(intents.StartSelectedCategoryIntent);
         } else {
+            console.log('emiiting new session with state categorys select');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
             this.emitWithState(intents.NewSession);
         }
 
+    });
+}
+
+const listInvokeHandler = function () {
+    let userId = this.event.session.user.userId;
+
+    getIncompleteTripDetails(userId).then(tripDetails => {
+        if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
+            console.log('emmiting newssion from listInvokeHandler');
+            this.emit(intents.NewSession);
+        }
+
+        console.log('restiing and startin categoryselect handler');
+        initializePackingSession.call(this, tripDetails);
+        this.handler.state = states.CATEGORY_SELECT;
+        this.emitWithState(intents.ListInvokeIntent);
     });
 }
 
@@ -110,6 +133,7 @@ const stopHandler = function () {
 }
 
 const unhandledHandler = function () {
+    console.log(this.event.request);
     clearState.call(this);
     this.emit(intents.NewSession);
 }
@@ -122,6 +146,7 @@ newSessionHandlers[intents.NewSession] = newSessionHandler;
 newSessionHandlers[intents.IncompleteTripIntent] = incompleteTripHandler;
 newSessionHandlers[intents.StartNewPackingIntent] = startNewPackingHandler;
 newSessionHandlers[intents.ResumeOldPackingIntent] = resumeOldPackingHandler;
+newSessionHandlers[intents.ListInvokeIntent] = listInvokeHandler;
 newSessionHandlers[intents.AMAZON.StopIntent] = stopHandler;
 newSessionHandlers[intents.Unhandled] = unhandledHandler;
 

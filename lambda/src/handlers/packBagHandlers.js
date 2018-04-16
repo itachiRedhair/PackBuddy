@@ -75,6 +75,11 @@ const packingCompleteHandler = function () {
     });
 }
 
+const listInvokeHandler = function () {
+    this.handler.state = states.CATEGORY_SELECT;
+    this.emitWithState(intents.ListInvokeIntent);
+}
+
 const helpHandler = function () {
     this.response.speak(messages.PACK_HELP)
         .listen(messages.PACK_HELP);
@@ -200,6 +205,7 @@ packBagHandlers[intents.NewSession] = newSessionHandler;
 packBagHandlers[intents.PackItemIntent] = packItemHandler;
 packBagHandlers[intents.PackNewCategoryIntent] = packNewCategoryHandler;
 packBagHandlers[intents.PackingCompleteIntent] = packingCompleteHandler;
+packBagHandlers[intents.ListInvokeIntent] = listInvokeHandler;
 packBagHandlers[intents.AMAZON.HelpIntent] = helpHandler;
 packBagHandlers[intents.AMAZON.YesIntent] = yesHandler;
 packBagHandlers[intents.AMAZON.NoIntent] = noHandler;
