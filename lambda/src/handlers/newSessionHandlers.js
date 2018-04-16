@@ -64,8 +64,8 @@ const incompleteTripHandler = function () {
     let userId = this.event.session.user.userId;
     getIncompleteTripDetails(userId).then(tripDetails => {
         if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
-            console.log('emmiting newssion from incomplete trip handler');
-            this.emit(intents.NewSession);
+            this.response.speak("It seems you don't have ongoing packing. You can instead try saying start new packing").listen("You can instead try saying start new packing");
+            this.emit(":responseReady");
         }
         console.log('restiing and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
@@ -89,7 +89,8 @@ const resumeOldPackingHandler = function () {
         console.log('in resume odl packing, tripdetails=>', tripDetails);
         if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
             console.log('emmiting newssion from resume old packing handler');
-            this.emit(intents.NewSession);
+            this.response.speak("It seems you don't have ongoing packing. You can instead try saying start new packing").listen("You can instead try saying start new packing");
+            this.emit(":responseReady");
         }
 
         console.log('resetting and startin categoryselect handler');
@@ -116,8 +117,8 @@ const listInvokeHandler = function () {
 
     getIncompleteTripDetails(userId).then(tripDetails => {
         if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
-            console.log('emmiting newssion from listInvokeHandler');
-            this.emit(intents.NewSession);
+            this.response.speak("It seems you don't have ongoing packing. You can instead try saying start new packing").listen("You can instead try saying start new packing");
+            this.emit(":responseReady");
         }
 
         console.log('restiing and startin categoryselect handler');
