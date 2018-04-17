@@ -35,7 +35,7 @@ describe("Testing selectCategoryIntent when user replies with category", functio
 
 
         it("should not have correct spoken response", function() {
-            console.log('speechResponse in pack bagintent yes',speechResponse);
+            // console.log('speechResponse in pack bagintent yes',speechResponse);
             expect(speechResponse.response.outputSpeech.ssml).to.include("phone charger")
         })
 

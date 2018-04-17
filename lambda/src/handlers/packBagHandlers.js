@@ -66,9 +66,9 @@ const packNewCategoryHandler = function () {
 
 const packingCompleteHandler = function () {
     clearState.call(this);
-    console.log('in packing complete intent before then');
+    // console.log('in packing complete intent before then');
     ddb.updatePackingList.call(this).then(() => {
-        console.log('in packing complete intent inside then');
+        // console.log('in packing complete intent inside then');
         this.attributes[session.CURRENT_TOTAL_PACKING_STATUS] = packingStatus.COMPLETED;
         this.response.speak(messages.PACK_COMPLETE_PROPMT);
         this.emit(":responseReady");
@@ -107,7 +107,7 @@ const yesHandler = function () {
 }
 
 const noHandler = function () {
-    console.log('in no handler function of pack bag intent');
+    // console.log('in no handler function of pack bag intent');
     switch (this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]) {
         case packingStatus.STARTED:
             clearState.call(this);
@@ -117,7 +117,7 @@ const noHandler = function () {
             });
             break
         case packingStatus.IN_PROGRESS:
-            console.log('in in progress condition of no handler function of pack bag intent');
+            // console.log('in in progress condition of no handler function of pack bag intent');
             var currentPackingItemKey = this.attributes[session.CURRENT_PACKING_ITEM_KEY];
             var currentPackingCategoryKey = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY];
             this.attributes[session.CURRENT_PACKING_LIST][currentPackingCategoryKey]['items'][currentPackingItemKey]['status'] = packingItemStatus.NOT_INTERESTED;

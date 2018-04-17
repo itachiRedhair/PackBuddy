@@ -38,10 +38,10 @@ const newTripHandler = function () {
                     this.handler.state = states.PACKING;
                     this.emitWithState(intents.NewSession);
                 }).catch(error => {
-                    console.log('error catched in dynamodb', error);
+                    // console.log('error catched in dynamodb', error);
                 });
         }).catch(err => {
-            console.log('error catched in genearate trip', err)
+            // console.log('error catched in genearate trip', err)
         });
     }
 }
@@ -91,13 +91,13 @@ const delegateSlotCollection = function () {
         const consentToken = this.event.context.System.user.permissions.consentToken;
         const fromCity = this.event.request.intent.slots.fromCity.value;
 
-        console.log(consentToken);
+        // console.log(consentToken);
         if (consentToken) {
-            console.log('inside consent token found condition')
+            // console.log('inside consent token found condition')
             getDeviceAddress.call(this).then((fromCityValue) => {
-                console.log('before askForCity call in not started dialogstate condition');
+                // console.log('before askForCity call in not started dialogstate condition');
                 if (fromCityValue !== null) {
-                    console.log('fromCityValue', fromCityValue);
+                    // console.log('fromCityValue', fromCityValue);
                     updatedIntent.slots.fromCity.value = fromCityValue;
                 } else {
                     this.emit(":delegate", updatedIntent);
@@ -107,7 +107,7 @@ const delegateSlotCollection = function () {
                 this.emit(':confirmSlot', "fromCity", prompt, prompt, updatedIntent);
                 // this.emit(":delegate", updatedIntent);
             }).catch(err => {
-                console.log('error inside delegate function get device address call', err);
+                // console.log('error inside delegate function get device address call', err);
             });
         } else {
             // askForCityIfCountryFound.call(this);
@@ -115,7 +115,7 @@ const delegateSlotCollection = function () {
         }
 
     } else if (this.event.request.dialogState !== "COMPLETED") {
-        console.log('before askForCity call in not completed dialogstate condition');
+        // console.log('before askForCity call in not completed dialogstate condition');
 
         // askForCityIfCountryFound.call(this);
 
@@ -137,11 +137,11 @@ const getDeviceAddress = function () {
         let deviceAddressRequest = alexaDeviceAddressClient.getCityFromDeviceAddress();
 
         deviceAddressRequest.then((addressResponse) => {
-            console.log("inside then of deviceaddrssRequest,", addressResponse);
+            // console.log("inside then of deviceaddrssRequest,", addressResponse);
             resolve(addressResponse);
-            console.info("Ending getAddressHandler()");
+            // console.info("Ending getAddressHandler()");
         }).catch(err => {
-            console.log('error whiel getting ocuntry and postal code', err);
+            // console.log('error whiel getting ocuntry and postal code', err);
             reject(err);
         });
     })
@@ -157,13 +157,13 @@ const askForCityIfCountryFound = function () {
 
     if (!toCity && toCountry) {
         let message = "Tell which city you are going to in " + toCountry;
-        console.log('before this.emit of toCity elicitslot');
+        // console.log('before this.emit of toCity elicitslot');
         this.emit(':elicitSlot', "toCity", message, message, updatedIntent);
     }
 
     if (fromCountry && !fromCity) {
         let message = "Tell which city you are going from in " + fromCountry;
-        console.log('before this.emit of fromCity elicitslot');
+        // console.log('before this.emit of fromCity elicitslot');
         this.emit(':elicitSlot', "fromCity", message, message, updatedIntent);
     }
 }

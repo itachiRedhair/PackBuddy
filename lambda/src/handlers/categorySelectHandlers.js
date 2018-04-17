@@ -32,7 +32,7 @@ const listCategoryHandler = function () {
     let categories = getNotPackedCategories.call(this);
 
     let message = '';
-    console.log('in list category intent', categories)
+    // console.log('in list category intent', categories)
     let packingList = this.attributes[session.CURRENT_PACKING_LIST];
     let totalPackingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
 
@@ -83,11 +83,11 @@ const listCategoryHandler = function () {
 
     } else {
         if (getRemindMeStatus.call(this) === true) {
-            console.log('get remind me status = true');
+            // console.log('get remind me status = true');
             this.response.speak(messages.REMIND_ITEMS_PACK_QUESTION).listen(messages.REMIND_ITEMS_PACK_QUESTION);
             this.emit(":responseReady");
         } else {
-            console.log('get remind me status = false');
+            // console.log('get remind me status = false');
             this.handler.state = states.PACKING;
             this.emitWithState(intents.PackingCompleteIntent);
         }

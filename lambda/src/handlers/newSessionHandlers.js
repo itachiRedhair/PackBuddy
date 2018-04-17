@@ -24,9 +24,9 @@ const newSessionHandler = function () {
 
         if (userInfo !== null) {
             this.attributes[session.USER_INFO] = userInfo;
-            console.log('in newSessionhandler, got userInfo,=>', userInfo);
+            // console.log('in newSessionhandler, got userInfo,=>', userInfo);
         } else {
-            console.log('got aint no info');
+            // console.log('got aint no info');
         }
 
         if (this.event.request.type === "IntentRequest") {
@@ -52,7 +52,7 @@ const newSessionHandler = function () {
 
         let userId = this.event.session.user.userId;
         getIncompleteTripDetails(userId).then(incompleteTripDetails => {
-            console.log('in newsessionhandler incompletripdetails->', incompleteTripDetails);
+            // console.log('in newsessionhandler incompletripdetails->', incompleteTripDetails);
             if (incompleteTripDetails !== null) {
                 this.response.speak(messages.GREETING + " " + messages.START_QUESTION_WITH_REMINDER)
                     .listen(messages.START_QUESTION_WITH_REMINDER);
@@ -64,13 +64,13 @@ const newSessionHandler = function () {
                 this.emit(':responseReady');
             }
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
         });
     })
 }
 
 const incompleteTripHandler = function () {
-    console.log('here in incomplete trip intent');
+    // console.log('here in incomplete trip intent');
     // this.attributes[session.CURRENT_TOTAL_PACKING_STATUS]=packingStatus.STARTED;
     let userId = this.event.session.user.userId;
     getIncompleteTripDetails(userId).then(tripDetails => {
@@ -78,7 +78,7 @@ const incompleteTripHandler = function () {
             this.response.speak("It seems you don't have ongoing packing. You can instead try saying start new packing").listen("You can instead try saying start new packing");
             this.emit(":responseReady");
         }
-        console.log('restiing and startin categoryselect handler');
+        // console.log('restiing and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
         resetRemindMePackingList.call(this);
         this.handler.state = states.CATEGORY_SELECT;
@@ -87,7 +87,7 @@ const incompleteTripHandler = function () {
 }
 
 const startNewPackingHandler = function () {
-    console.log('here in start new packing intent');
+    // console.log('here in start new packing intent');
     this.handler.state = states.NEW_TRIP;
     this.emitWithState(intents.NewSession)
 }
@@ -97,25 +97,25 @@ const resumeOldPackingHandler = function () {
     let userId = this.event.session.user.userId;
 
     getIncompleteTripDetails(userId).then(tripDetails => {
-        console.log('in resume odl packing, tripdetails=>', tripDetails);
+        // console.log('in resume odl packing, tripdetails=>', tripDetails);
         if (tripDetails === undefined || tripDetails === null || Object.keys(tripDetails).length === 0) {
-            console.log('emmiting newssion from resume old packing handler');
+            // console.log('emmiting newssion from resume old packing handler');
             this.response.speak("It seems you don't have ongoing packing. You can instead try saying start new packing").listen("You can instead try saying start new packing");
             this.emit(":responseReady");
         }
 
-        console.log('resetting and startin categoryselect handler');
+        // console.log('resetting and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
         this.handler.state = states.CATEGORY_SELECT;
 
-        console.log('in resume old packing, selected_category=>', tripDetails.selected_category);
+        // console.log('in resume old packing, selected_category=>', tripDetails.selected_category);
 
-        if (tripDetails.selected_category !== 'null') {
-            console.log('emiiting start selected ccategory intent');
+        // if (tripDetails.selected_category !== 'null') {
+            // console.log('emiiting start selected ccategory intent');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = tripDetails.selected_category;
             this.emitWithState(intents.StartSelectedCategoryIntent);
-        } else {
-            console.log('emiiting new session with state categorys select');
+        // } else {
+            // console.log('emiiting new session with state categorys select');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
             this.emitWithState(intents.NewSession);
         }
@@ -123,7 +123,7 @@ const resumeOldPackingHandler = function () {
     });
 }
 
-const listInvokeHandler = function () {
+// const listInvokeHandler = function () {
     let userId = this.event.session.user.userId;
 
     getIncompleteTripDetails(userId).then(tripDetails => {
@@ -132,7 +132,7 @@ const listInvokeHandler = function () {
             this.emit(":responseReady");
         }
 
-        console.log('restiing and startin categoryselect handler');
+        // console.log('restiing and startin categoryselect handler');
         initializePackingSession.call(this, tripDetails);
         this.handler.state = states.CATEGORY_SELECT;
         this.emitWithState(intents.ListInvokeIntent);
@@ -145,7 +145,7 @@ const stopHandler = function () {
 }
 
 const unhandledHandler = function () {
-    console.log(this.event.request);
+    // console.log(this.event.request);
     clearState.call(this);
     this.emit(intents.NewSession);
 }

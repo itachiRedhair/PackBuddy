@@ -6,7 +6,7 @@ module.exports = Object.freeze({
 
     START_QUESTION: "Do you need help with packing?",
 
-    START_QUESTION_WITH_REMINDER: "It seems you are not done with your last packing? Do you want to resume it or start with the new one?",
+    START_QUESTION_WITH_REMINDER: "It see you are not done with your last packing? Do you want to resume it or start with the new one?",
 
     NEW_SESSION_STOP: "Ok, See you next time!",
 

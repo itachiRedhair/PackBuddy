@@ -18,14 +18,14 @@ function getUserInfoFromFB() {
             fetch(url + accessToken)
                 .then(res => res.json())
                 .then(body => {
-                    console.log(body);
+                    // console.log(body);
                     if (body) {
                         resolve(body)
                     } else {
                         resolve(null)
                     }
                 }).catch(err => {
-                    console.log('error while fetching userInfo from facebook', err);
+                    // console.log('error while fetching userInfo from facebook', err);
                     reject(err);
                 });
         }

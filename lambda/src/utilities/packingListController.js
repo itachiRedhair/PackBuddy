@@ -13,21 +13,21 @@ const session = require("./../constants").session;
 
 function createPackingList(destination, date, duration) {
     let userInfo = this.attributes[session.USER_INFO];
-    console.log('inside createpackinglsit,userinfo=>', userInfo);
+    // console.log('inside createpackinglsit,userinfo=>', userInfo);
     return new Promise((resolve, reject) => {
         getCustomizedLists(userInfo, destination, date, duration).then(customizedListArray => {
             const fixedList = JSON.parse(JSON.stringify(packingSchemaFixed));
-            console.log("fixedList=>", fixedList);
+            // console.log("fixedList=>", fixedList);
 
             customizedListArray.forEach(customizedList => {
                 const keys = Object.keys(customizedList);
                 keys.forEach(key => Object.assign(fixedList[key]['items'], customizedList[key]['items']));
             })
 
-            console.log("packingList=>", fixedList);
+            // console.log("packingList=>", fixedList);
             resolve(fixedList);
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
             reject(err);
         })
     });
@@ -48,7 +48,7 @@ function getCustomizedLists(userInfo, destination, date, duration) {
         Promise.all(
             promiseArr
         ).then(customizedListArray => {
-            console.log('customizeListArray=>,', customizedListArray)
+            // console.log('customizeListArray=>,', customizedListArray)
             resolve(customizedListArray);
         })
     })

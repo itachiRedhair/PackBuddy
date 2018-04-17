@@ -24,4 +24,4 @@ docClient.get(params, function(err, data) {
 java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar -sharedDb -port 3333
 
 ///ngrok init
-ngrok http -bind-tls=true -host-header=rewrite 3000
+./ngrok http -bind-tls=true -host-header=rewrite 3000

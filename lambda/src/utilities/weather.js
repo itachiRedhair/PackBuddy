@@ -18,7 +18,7 @@ function getWeatherData(city, date, duration) {
                     // console.log(weatherData);
                     resolve(weatherData);
                 }).catch(err => {
-                    console.log('error while fetching weather', err);
+                    // console.log('error while fetching weather', err);
                     reject(err);
                 });
         })
@@ -33,7 +33,7 @@ function getLatLngByCity(city) {
                 let location = body.results[0].geometry.location;
                 resolve(location);
             }).catch(err => {
-                console.log('error while fetching lcoation', err);
+                // console.log('error while fetching lcoation', err);
                 reject(err);
             });
     })

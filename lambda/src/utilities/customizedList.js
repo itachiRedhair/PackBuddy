@@ -12,7 +12,7 @@ function getWeatherCustomizedList(destination, date, duration) {
                 let customizedList = getWeatherBasedPackingList(data['temperatureMax']);
                 resolve(customizedList);
             }).catch(err => {
-                console.log('Error', err);
+                // console.log('Error', err);
                 reject(err);
             })
     })
