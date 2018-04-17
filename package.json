@@ -1,0 +1,12 @@
+{
+    "name": "local-alexa",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node test_ngrok/dev-server.js",
+        "deploy": "ask deploy -t lambda -p adminuser"
+    },
+    "devDependencies": {
+        "express": "*",
+        "body-parser": "*"
+    }
+}

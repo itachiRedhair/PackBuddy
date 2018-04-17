@@ -1,0 +1,11 @@
+{
+    "name": "local-testing-server",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "node dev-server.js"
+    },
+    "devDependencies": {
+        "express": "*",
+        "body-parser": "*"
+    }
+}
