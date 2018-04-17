@@ -40,7 +40,7 @@ function getCustomizedLists(userInfo, destination, date, duration) {
 
         let promiseArr = [getWeatherPackingList];
 
-        if (userInfo.gender) {
+        if (userInfo && userInfo.gender) {
             let getGenderPackingList = getGenderCustomizedList(userInfo.gender);
             promiseArr.push(getGenderPackingList);
         }
