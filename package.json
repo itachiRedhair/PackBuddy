@@ -1,5 +1,5 @@
 {
-    "name": "local-alexa",
+    "name": "local-testing-server",
     "version": "1.0.0",
     "scripts": {
         "start": "node test_ngrok/dev-server.js",

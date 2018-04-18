@@ -110,11 +110,11 @@ const resumeOldPackingHandler = function () {
 
         // console.log('in resume old packing, selected_category=>', tripDetails.selected_category);
 
-        // if (tripDetails.selected_category !== 'null') {
+        if (tripDetails.selected_category !== 'null') {
             // console.log('emiiting start selected ccategory intent');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = tripDetails.selected_category;
             this.emitWithState(intents.StartSelectedCategoryIntent);
-        // } else {
+        } else {
             // console.log('emiiting new session with state categorys select');
             this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] = 'null';
             this.emitWithState(intents.NewSession);
@@ -123,7 +123,7 @@ const resumeOldPackingHandler = function () {
     });
 }
 
-// const listInvokeHandler = function () {
+const listInvokeHandler = function () {
     let userId = this.event.session.user.userId;
 
     getIncompleteTripDetails(userId).then(tripDetails => {

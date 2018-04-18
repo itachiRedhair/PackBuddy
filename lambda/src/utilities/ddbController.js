@@ -41,7 +41,7 @@ function getLastTripID(userId) {
                 // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
-                //console.log(data); // successful response
+                // console.log(data); // successful response
                 resolve(data);
             }
         });
@@ -63,7 +63,7 @@ function getFromDDB(userId) {
                 // console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
-                //console.log(data); // successful response
+                // console.log(data); // successful response
                 resolve(data);
             }
         });
@@ -72,7 +72,7 @@ function getFromDDB(userId) {
 
 function insertTrip(userId, tripEntry) {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb insert trip with userId', userId)
+        // console.log('here in ddb insert trip with userId', userId)
         var params = {
             TableName: constants.tripDataTable,
             Key: {
@@ -90,19 +90,19 @@ function insertTrip(userId, tripEntry) {
         };
 
         initializeDynamoDB(userId).then(() => {
-            console.log('here in initializedynamodb in insert trip');
+            // console.log('here in initializedynamodb in insert trip');
             documentClient.update(params, (err, data) => {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     reject(err);
                 } else {
-                    console.log('data inserted successfully');
+                    // console.log('data inserted successfully');
                     resolve();
                 }
             });
         }).catch(err => {
             reject(err);
-            console.log('error in initializeDynamoDB');
+            // console.log('error in initializeDynamoDB');
         });
     });
 }
@@ -114,8 +114,8 @@ function updatePackingList() {
     let packingStatus = this.attributes[session.CURRENT_TOTAL_PACKING_STATUS];
     let remindMeStatus = getRemindMeStatus.call(this);
     let selectedCategory = this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] ? this.attributes[session.CURRENT_PACKING_CATEGORY_KEY] : 'null'
-    console.log("inside update packng list, remindMeStatus=>", remindMeStatus)
-    console.log('inisde ddb update packing list', userId, tripId);
+    // console.log("inside update packng list, remindMeStatus=>", remindMeStatus)
+    // console.log('inisde ddb update packing list', userId, tripId);
     return new Promise((resolve, reject) => {
         // console.log('here in dynamodb with userId ', userId)
         var params = {
@@ -142,10 +142,10 @@ function updatePackingList() {
         // initializeDynamoDB(userId).then(() => {
         documentClient.update(params, (err, data) => {
             if (err) {
-                console.log("Error while updating dynamodb in updatePackingList(), err=>", err);
+                // console.log("Error while updating dynamodb in updatePackingList(), err=>", err);
                 reject(err);
             } else {
-                console.log('successful updating data', data); // successful response
+                // console.log('successful updating data', data); // successful response
                 resolve();
             }
         });
@@ -164,7 +164,7 @@ function initializeDynamoDB(userId) {
         //         })
         //         .length > 0;
 
-        //     // console.log(exists);
+            // console.log(exists);
         //     if (!exists) {
         //TODO: remove following code later
         //following code is redundant
@@ -173,37 +173,37 @@ function initializeDynamoDB(userId) {
         //     waitForTableReady().then(() => {
         //         initializeTableData(userId).then(() => {
         //             resolve();
-        //             console.log('table data initialized successfully');
+                    // console.log('table data initialized successfully');
         //         }).catch(err => {
-        //             console.log('error in table data initialization');
+                    // console.log('error in table data initialization');
         //             reject(err);
         //         })
         //     }).catch(err => {
-        //         console.log('error in wait for table ready');
+                // console.log('error in wait for table ready');
         //         reject(err);
         //     })
         // }).catch(err => {
-        //     console.log('error in table creartion');
+            // console.log('error in table creartion');
         //     reject(err);
         // })
         // } else {
         getAllItemsData(userId).then(data => {
-            console.log('in checkIf table data exist call, data=>', data, JSON.stringify(data), Object.keys(data).length);
+            // console.log('in checkIf table data exist call, data=>', data, JSON.stringify(data), Object.keys(data).length);
             // if (Object.keys(data.Item).length < 2) {
             if (true) { //always override data
                 initializeTableData(userId).then(data => {
-                    console.log('table data initialized successfully');
+                    // console.log('table data initialized successfully');
                     resolve();
                 })
             }
             resolve();
         }).catch(err => {
-            console.log("error in check if table data exists");
+            // console.log("error in check if table data exists");
             reject(err);
         })
         // }
         // }).catch(err => {
-        //     console.log('error in listing table');
+            // console.log('error in listing table');
         //     reject(err);
         // })
     })
@@ -211,11 +211,11 @@ function initializeDynamoDB(userId) {
 
 function listTables() {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb listTables with userId')
+        // console.log('here in ddb listTables with userId')
         dynamodb.listTables({}, (err, data) => {
             if (err) reject(err);
             else {
-                console.log('table list data', data);
+                // console.log('table list data', data);
                 resolve(data);
             }
         });
@@ -224,7 +224,7 @@ function listTables() {
 
 function createTable() {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb create Table')
+        // console.log('here in ddb create Table')
         let params = {
             TableName: constants.tripDataTable,
             KeySchema: [
@@ -256,7 +256,7 @@ function createTable() {
 
 function waitForTableReady() {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb wait for table ready');
+        // console.log('here in ddb wait for table ready');
         var params = {
             TableName: constants.tripDataTable
         };
@@ -272,7 +272,7 @@ function waitForTableReady() {
 
 function initializeTableData(userId) {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb initialize table data');
+        // console.log('here in ddb initialize table data');
         let params = {
             TableName: constants.tripDataTable,
             Item: {
@@ -290,7 +290,7 @@ function initializeTableData(userId) {
 
 function getAllItemsData(userId) {
     return new Promise((resolve, reject) => {
-        console.log('here in ddb getAllItemsData');
+        // console.log('here in ddb getAllItemsData');
         var params = {
             TableName: constants.tripDataTable,
             Key: {
