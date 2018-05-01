@@ -21,7 +21,7 @@ docClient.get(params, function(err, data) {
 
 
 var params = {
-    TableName: 'table_name',
+    TableName: 'tripDataTable',
     KeySchema: [ // The type of of schema.  Must start with a HASH type, with an optional second RANGE.
         { // Required HASH type attribute
             AttributeName: 'userId',

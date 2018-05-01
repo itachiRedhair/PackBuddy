@@ -20,7 +20,7 @@
           "slots": [
             {
               "name": "fromCity",
-              "type": "AMAZON.US_CITY",
+              "type": "AMAZON.City",
               "samples": [
                 "from {fromCity}",
                 "{fromCity}",
@@ -30,7 +30,7 @@
             },
             {
               "name": "toCity",
-              "type": "AMAZON.US_CITY",
+              "type": "AMAZON.City",
               "samples": [
                 "to {toCity}",
                 "I am heading to {toCity}",
@@ -71,11 +71,11 @@
             },
             {
               "name": "toCountry",
-              "type": "AMAZON.GB_REGION"
+              "type": "AMAZON.Region"
             },
             {
               "name": "fromCountry",
-              "type": "AMAZON.GB_REGION"
+              "type": "AMAZON.Region"
             }
           ],
           "samples": [
@@ -361,7 +361,7 @@
           "slots": [
             {
               "name": "fromCity",
-              "type": "AMAZON.US_CITY",
+              "type": "AMAZON.City",
               "elicitationRequired": true,
               "confirmationRequired": false,
               "prompts": {
@@ -370,7 +370,7 @@
             },
             {
               "name": "toCity",
-              "type": "AMAZON.US_CITY",
+              "type": "AMAZON.City",
               "elicitationRequired": true,
               "confirmationRequired": false,
               "prompts": {
@@ -406,13 +406,13 @@
             },
             {
               "name": "toCountry",
-              "type": "AMAZON.GB_REGION",
+              "type": "AMAZON.Region",
               "elicitationRequired": false,
               "confirmationRequired": false
             },
             {
               "name": "fromCountry",
-              "type": "AMAZON.GB_REGION",
+              "type": "AMAZON.Region",
               "elicitationRequired": false,
               "confirmationRequired": false
             }

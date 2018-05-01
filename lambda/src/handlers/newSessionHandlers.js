@@ -24,9 +24,9 @@ const newSessionHandler = function () {
 
         if (userInfo !== null) {
             this.attributes[session.USER_INFO] = userInfo;
-            console.log('in newSessionhandler, got userInfo,=>', userInfo);
+            console.log('in neSesionhandler, got userInfo,=>', userInfo);
         } else {
-            console.log('got aint no info');
+            console.log('got aint nocmf info');
         }
 
         if (this.event.request.type === "IntentRequest") {

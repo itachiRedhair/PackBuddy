@@ -71,11 +71,11 @@
             },
             {
               "name": "toCountry",
-              "type": "AMAZON.GB_REGION"
+              "type": "AMAZON.Country"
             },
             {
               "name": "fromCountry",
-              "type": "AMAZON.GB_REGION"
+              "type": "AMAZON.Country"
             }
           ],
           "samples": [
@@ -287,6 +287,23 @@
             "wait for {waitTime}",
             "wait"
           ]
+        },
+        {
+          "name": "NewTripCountryIntent",
+          "slots": [
+            {
+              "name": "fromCountry",
+              "type": "AMAZON.Country"
+            },
+            {
+              "name": "toCounty",
+              "type": "AMAZON.Country"
+            }
+          ],
+          "samples": [
+            "{toCounty}",
+            "{fromCountry}"
+          ]
         }
       ],
       "types": [
@@ -406,13 +423,13 @@
             },
             {
               "name": "toCountry",
-              "type": "AMAZON.GB_REGION",
+              "type": "AMAZON.Country",
               "elicitationRequired": false,
               "confirmationRequired": false
             },
             {
               "name": "fromCountry",
-              "type": "AMAZON.GB_REGION",
+              "type": "AMAZON.Country",
               "elicitationRequired": false,
               "confirmationRequired": false
             }
