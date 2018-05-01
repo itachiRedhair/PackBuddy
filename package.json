@@ -2,12 +2,21 @@
   "name": "local-testing-server",
   "version": "1.0.0",
   "scripts": {
-    "start": "node test_ngrok/dev-server.js",
+    "start":
+      "alexa-skill-local --file lambda/src/index.js --config lambda/src/asl-config.json",
+    "start:debug":
+      "alexa-skill-local --inspect-brk --file lambda/src/index.js --config lambda/src/asl-config.json",
     "deploy": "ask deploy -t lambda -p adminuser",
     "getModel":
       "ask api get-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 -g development -l en-US>models/en-US.json -p adminuser && ask api get-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 -g development -l en-GB>models/en-GB.json -p adminuser && ask api get-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 -g development -l en-IN>models/en-IN.json -p adminuser",
-    "uploadModel":
-      "ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-US.json -l en-US --profile adminuser --stage development && ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-GB.json -l en-GB --profile adminuser --stage development && ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-US.json -l en-US --profile adminuser --stage development"
+    "uploadModelUS":
+      "ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-US.json -l en-US --profile adminuser --stage development",
+    "uploadModelGB":
+      "ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-GB.json -l en-GB --profile adminuser --stage development",
+    "uploadModelIN":
+      "ask api update-model -s amzn1.ask.skill.d8ab4426-66ca-4dfd-bd0d-7f2c02419413 --file models/en-IN.json -l en-IN --profile adminuser --stage development",
+    "uploadAllModel":
+      "npm run uploadModelUS && npm run uploadModelGB && npm run uploadModelIN"
   },
   "devDependencies": {
     "express": "*",

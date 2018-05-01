@@ -1,61 +1,71 @@
 "use strict";
 
 module.exports = Object.freeze({
+  FIRST_TIME_MESSAGE:
+    "I am Pack Buddy. I am here to help you pack your stuff for your trip. You can tell me to start new trip and I will ask you few questions about your trip. You can always call me to pack your stuff by saying start packing. I will prompt you what to pack and accordingly you can tell me if you've packed it or not. You can also tell me to remind something. Feel free to pause me by saying stop or wait anytime.",
 
-    GREETING: "Hello, I am Pack Buddy.",
+  GREETING: "Hello.",
 
-    START_QUESTION: "Do you need help with packing?",
+  START_QUESTION: "Do you need help with packing for your new trip?",
 
-    START_QUESTION_WITH_REMINDER: "It seems you are not done with your last packing? Do you want to resume it or start with the new one?",
+  START_QUESTION_WITH_REMINDER:
+    "It seems you are not done with your last packing? Do you want to resume it or start with the new one?",
 
-    NEW_SESSION_STOP: "Ok, See you next time!",
+  NEW_SESSION_STOP: "Ok, See you next time!",
 
-    NEW_TRIP_START_QUESTION: "Tell me about your trip. Which city are you heading to?",
+  NEW_TRIP_START_QUESTION:
+    "Tell me about your trip. Which city are you heading to?",
 
-    NEW_TRIP_START_QUESTION_REPROMPT: "You can say I am going to Washington",
+  NEW_TRIP_START_QUESTION_REPROMPT: "You can say I am going to Washington",
 
-    NEW_TRIP_HELP: "Try saying I am going to Los Angeles",
+  NEW_TRIP_HELP: "Try saying I am going to Los Angeles",
 
-    NEW_TRIP_NO: "Ok, see you next time!",
+  NEW_TRIP_NO: "Ok, see you next time!",
 
-    NEW_TRIP_STOP: "Note that your incomplete trip details are not saved. Good Bye!",
+  NEW_TRIP_STOP:
+    "Note that your incomplete trip details are not saved. Good Bye!",
 
-    NEW_TRIP_UNHANDLED: "It seems there is some problem. Try saying I am going to Los Angeles",
+  NEW_TRIP_UNHANDLED:
+    "It seems there is some problem. Try saying I am going to Los Angeles",
 
-    PACK_BAG_START_QUESTION: "Let's start packing. Shall we?",
+  PACK_BAG_START_QUESTION: "Let's start packing. Shall we?",
 
-    PACK_BAG_START_QUESTION_REPROMPT: "Do you want to start packing right now?",
+  PACK_BAG_START_QUESTION_REPROMPT: "Do you want to start packing right now?",
 
-    PACK_ITEM_PROMPT: [
-        "Let's pack",
-        "Now pack",
-        "Pack your"
-    ],
+  PACK_ITEM_PROMPT: ["Let's pack", "Now pack", "Pack your"],
 
-    PACK_ITEM_REPROMPT: "You can say yes, no or remind me later or else you can tell pack buddy to wait and resume later.",
+  FIRST_PACK_ITEM_PROMPT:
+    "Say done when you've packed the item or you can say no to remove item from the list.",
 
-    PACK_COMPLETE_PROPMT: "Your packing is complete. Thank you!",
+  PACK_ITEM_REPROMPT:
+    "You can say yes, no or remind me later or else you can tell pack buddy to wait and resume later.",
 
-    PACK_HELP: "Try saying let's start packing.",
+  PACK_COMPLETE_PROPMT: "Your packing is complete. Thank you!",
 
-    PACK_BAG_START_NO: "Ok, see you next time!",
+  PACK_HELP: "Try saying let's start packing.",
 
-    PACK_BAG_STOP: "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
+  PACK_BAG_START_NO: "Ok, see you next time!",
 
-    PACK_BAG_UNHANDLED: "Sorry didn't catch it. Try saying let's start packing.",
+  PACK_BAG_STOP:
+    "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
 
-    SELECT_CATEGORY_QUESTION: "What do you want to pack",
+  PACK_BAG_UNHANDLED: "Sorry didn't catch it. Try saying let's start packing.",
 
-    SELECT_CATEGORY_QUESTION_REPROMPT: "You can ask me to list categories.",
+  SELECT_CATEGORY_QUESTION: "Which category do you want to pack",
 
-    REMAINING_SINGLE_CATEGORY_PROMPT: "Let's finish your packing with ",
+  SELECT_CATEGORY_QUESTION_REPROMPT: "You can ask me to list categories.",
 
-    REMIND_ITEMS_PACK_QUESTION: "There are some items you asked me to remind me. Do you want to pack them now?",
+  REMAINING_SINGLE_CATEGORY_PROMPT: "Let's finish your packing with ",
 
-    SELECT_CATEGORY_HELP: "Try saying give me a list of categories or you can say let's pack clothes",
+  REMIND_ITEMS_PACK_QUESTION:
+    "There are some items you asked me to remind me. Do you want to pack them now?",
 
-    SELECT_CATEGORY_STOP: "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
+  SELECT_CATEGORY_HELP:
+    "Try saying give me a list of categories or you can say let's pack clothes",
 
-    SELECT_CATEGORY_UNHANDLED: "It seems there is some problem. Try saying give me a list of categories."
+  SELECT_CATEGORY_STOP:
+    "I am saving your details of incomplete packing. Next time I will remind you or you can ask me to resume packing. Good Bye!",
 
+  SELECT_CATEGORY_UNHANDLED:
+    "It seems there is some problem. Try saying give me a list of categories."
 });
