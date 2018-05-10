@@ -8,35 +8,35 @@ var packingItemsFixed = {
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       flosss: {
         name: "flosss",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       hairbrush: {
         name: "hairbrush",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       toothbrush: {
         name: "toothbrush",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       toothpaste: {
         name: "toothpaste",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       }
     },
     all_packed: false,
@@ -50,21 +50,21 @@ var packingItemsFixed = {
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       jeans: {
         name: "jeans",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       },
       "regular clothes": {
         name: "regular clothes",
         status: "_NOT_PACKED",
         meta_info: {},
         packed_on: "null",
-        preferred_baggage: ""
+        preferred_baggage: "null"
       }
     },
     all_packed: false,
@@ -116,21 +116,21 @@ const packingItemWeather = {
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         blanket: {
           name: "blanket",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         jacket: {
           name: "jacket",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         }
       }
     }
@@ -143,14 +143,14 @@ const packingItemWeather = {
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         "sleeveless clothes": {
           name: "sleeveless clothes",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         }
       }
     }
@@ -163,14 +163,14 @@ const packingItemWeather = {
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         umbrella: {
           name: "umbrella",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         }
       }
     }
@@ -186,14 +186,14 @@ const packingItemGender = {
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         mens_perfume: {
           name: "men's perfume",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         }
       }
     }
@@ -206,14 +206,14 @@ const packingItemGender = {
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         },
         womens_perfume: {
           name: "women's perfume",
           status: "_NOT_PACKED",
           meta_info: {},
           packed_on: "null",
-          preferred_baggage: ""
+          preferred_baggage: "null"
         }
       }
     }

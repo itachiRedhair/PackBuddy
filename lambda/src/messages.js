@@ -35,7 +35,7 @@ module.exports = Object.freeze({
   PACK_ITEM_PROMPT: ["Let's pack", "Now pack", "Pack your"],
 
   FIRST_PACK_ITEM_PROMPT:
-    "Say done when you've packed the item or you can say no to remove item from the list.",
+    ".Say done when you've packed the item or you can say no to remove item from the list.",
 
   PACK_ITEM_REPROMPT:
     "You can say yes, no or remind me later or else you can tell pack buddy to wait and resume later.",

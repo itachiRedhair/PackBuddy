@@ -35,7 +35,7 @@ const packItemHandler = function() {
     case packingStatus.IN_PROGRESS:
       let prompt = getRandomString(messages.PACK_ITEM_PROMPT) + " " + item.name;
       
-      if (item.preferred_baggage !== "") {
+      if (item.preferred_baggage !== "null") {
         prompt += " in " + item.preferred_baggage + ".";
       }
       
