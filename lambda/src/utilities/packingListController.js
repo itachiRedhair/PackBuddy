@@ -12,6 +12,7 @@ const getGenderCustomizedList = require("./customizedList")
 const packingStatus = require("./../constants").packingStatus;
 const packingItemStatus = require("./../constants").packingItemStatus;
 const session = require("./../constants").session;
+const useWeatherAPI = require("./../constants").useWeatherAPI;
 
 function createPackingList(destination, date, duration) {
   let userInfo = this.attributes[session.USER_INFO];
@@ -42,18 +43,16 @@ function createPackingList(destination, date, duration) {
 function getCustomizedLists(userInfo, destination, date, duration) {
   return new Promise((resolve, reject) => {
     let promiseArr = [];
-    
-    try {
+
+    if (useWeatherAPI) {
       let getWeatherPackingList = fetchWeatherCustomizedList(
         destination,
         date,
         duration
       );
       promiseArr.push(getWeatherPackingList);
-    } catch (err) {
-      console.log(err);
     }
-
+    
     if (userInfo && userInfo.gender) {
       let getGenderPackingList = getGenderCustomizedList(userInfo.gender);
       promiseArr.push(getGenderPackingList);
